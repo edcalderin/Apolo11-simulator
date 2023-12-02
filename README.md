@@ -2,6 +2,7 @@
 
 ## Table of contents
 <!--ts-->
+
 * [Problem statement](#problem-statement)
 * [Directory layout](#directory-layout)
 * [Architecture](#architecture)
@@ -64,9 +65,10 @@ Explanation on how to execute the reporter
 - [x] Inheritance
 - [x] Class methods
 - [x] File managements
-- [x] Linter
+- [x] Logging
+- [x] Other
 - [ ] Tests
-- [ ] other
+- [ ] Other
 
 ## About the authors
 

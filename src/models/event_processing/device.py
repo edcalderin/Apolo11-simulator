@@ -6,6 +6,6 @@ class Device:
         self.device_type = device_type
         self.device_status = device_status
         self.device_age = device_age
-    
-    def get_hash(self, mission_name: str)-> str:
+
+    def get_hash(self, mission_name: str) -> str:
         pass
