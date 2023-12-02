@@ -10,6 +10,7 @@
     * [Generator](#generator)
     * [Reporter](#reporter)
 * [Checkpoints](#checkpoints)
+* [About the authors](#about-the-authors)
 * [References](#references)
 <!--te-->
 
@@ -66,6 +67,19 @@ Explanation on how to execute the reporter
 - [x] Linter
 - [ ] Tests
 - [ ] other
+
+## About the authors
+
+### Erick
+Text here
+
+### Ana
+Text here
+
+### Pablo
+Text here
+
+
 
 ## References
 * Reference 1
