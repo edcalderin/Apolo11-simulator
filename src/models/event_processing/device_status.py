@@ -5,5 +5,5 @@ class DeviceType(Enum):
     GOOD = 'Good'
     WARNING = 'Warning'
     FAULTY = 'Faulty'
-    KILLED = 'Excellent'
+    KILLED = 'Killed'
     UNKNOWN = 'Unknown'

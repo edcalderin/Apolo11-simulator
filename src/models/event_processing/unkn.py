@@ -1,5 +1,5 @@
 from mission import Mission
+from pydantic import BaseModel
 
-class UNKN(Mission):
-    def __init__(self, uuid: str) -> None:
-        self.uuid = uuid
+class Unkn(Mission, BaseModel):
+    uuid: str

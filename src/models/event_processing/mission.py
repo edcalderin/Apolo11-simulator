@@ -1,16 +1,17 @@
 from device import Device
 from typing import List
+from pydantic import BaseModel, computed_field
 
-class Mission:
-    def __init__(self, start_date, end_date, budget: float, devices: List[Device]) -> None:
-        self.__start_date = start_date
-        self.__end_date = end_date
-        self.__budget = budget
-        self.__devices = devices
+class Mission(BaseModel):
+    start_date: str
+    end_date: str
+    budget: float
+    devices: List[Device]
 
+    @computed_field
     @property
     def duration(self):
-        return self.__end_date - self.__start_date
+        return self.end_date - self.start_date
 
-    def generate_event(self)->None:
+    def generate_event(self) -> None:
         raise NotImplementedError()

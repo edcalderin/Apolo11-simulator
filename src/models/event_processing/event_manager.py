@@ -1,9 +1,9 @@
 from typing import Any, Tuple
+from pydantic import BaseModel
 
-class EventManager:
-    def __init__(self, frequency_seconds: int, number_of_files: Tuple[int, int]) -> None:
-        self.__frequency_seconds = frequency_seconds
-        self.__number_of_files = number_of_files
+class EventManager(BaseModel):
+    frequency_seconds: int
+    number_of_files: Tuple[int, int]
 
     def __call__(self) -> Any:
         pass

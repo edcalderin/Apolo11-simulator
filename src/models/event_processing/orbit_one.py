@@ -1,7 +1,7 @@
 from mission import Mission
 from service_type import ServiceType
+from pydantic import BaseModel
 
-class OrbitOne(Mission):
-    def __init__(self, satellite_name:str, service_type: ServiceType) -> None:
-        self.__satellite_name = satellite_name
-        self.__service_type = service_type
+class OrbitOne(Mission, BaseModel):
+    satellite_name: str
+    service_type: ServiceType

@@ -1,7 +1,7 @@
 from mission import Mission
+from pydantic import BaseModel
+from typing import Tuple
 
-class ColonyMoon(Mission):
-    def __init__(self, size: int, latitude: float, longitude: float) -> None:
-        self.__size = size
-        self.__latitude = latitude
-        self.__longitude = longitude
+class ColonyMoon(Mission, BaseModel):
+    size: int
+    location: Tuple[float, float]
