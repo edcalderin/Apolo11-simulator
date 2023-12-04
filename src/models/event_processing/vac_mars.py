@@ -1,7 +1,6 @@
 from mission import Mission
-from pydantic import BaseModel
 
-class VacMars(Mission, BaseModel):
+class VacMars(Mission):
 
     number_of_passengers: int
     ticket_price: float

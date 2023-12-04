@@ -1,5 +1,4 @@
 from mission import Mission
-from pydantic import BaseModel
 
-class Unkn(Mission, BaseModel):
+class Unkn(Mission):
     uuid: str

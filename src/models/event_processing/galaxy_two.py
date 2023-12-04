@@ -1,6 +1,5 @@
 from mission import Mission
-from pydantic import BaseModel
 
-class GalaxyTwo(Mission, BaseModel):
+class GalaxyTwo(Mission):
     galaxy_name: str
     distance_ly: int
