@@ -1,4 +1,4 @@
-from mission import Mission
+from src.models.event_processing.mission import Mission
 
 class Unkn(Mission):
     uuid: str

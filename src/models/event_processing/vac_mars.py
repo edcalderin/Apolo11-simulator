@@ -1,5 +1,4 @@
-from mission import Mission
-import yaml
+from src.models.event_processing.mission import Mission
 
 class VacMars(Mission):
 

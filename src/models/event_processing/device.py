@@ -1,9 +1,9 @@
-from device_status import DeviceStatus
+from src.models.event_processing.device_status import DeviceStatus
 from pydantic import BaseModel, ConfigDict
 
 class Device(BaseModel):
     model_config = ConfigDict(use_enum_values=True)
-    id: str
+    id: int
     device_type: str
     device_status: DeviceStatus
     device_age: int

@@ -1,5 +1,4 @@
 from mission import Mission
-import yaml
 
 class GalaxyTwo(Mission):
     galaxy_name: str

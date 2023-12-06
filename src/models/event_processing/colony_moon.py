@@ -1,6 +1,5 @@
-from mission import Mission
+from src.models.event_processing.mission import Mission
 from typing import Tuple
-import yaml
 
 class ColonyMoon(Mission):
     size: int

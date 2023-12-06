@@ -1,4 +1,4 @@
-from device import Device
+from src.models.event_processing.device import Device
 from typing import List
 from pydantic import BaseModel, computed_field
 import yaml
@@ -15,5 +15,5 @@ class Mission(BaseModel):
         return ''.join([self.end_date, self.start_date])
 
     def generate_event(self, name:str) -> None:
-        with open(name, 'w') as file:
+        with open(name, 'w+') as file:
             yaml.dump(self.model_dump(), file)
