@@ -1,6 +1,6 @@
 from enum import Enum
 
-class DeviceType(Enum):
+class DeviceStatus(Enum):
     EXCELLENT = 'Excellent'
     GOOD = 'Good'
     WARNING = 'Warning'
