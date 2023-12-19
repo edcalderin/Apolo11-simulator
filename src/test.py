@@ -10,7 +10,6 @@ orbit_one = OrbitOne(
     budget= 2,
     satellite_name='OpenAI',
     service_type= ServiceType.UPDATE,
-    devices= [Device(id=2, device_status=DeviceStatus.EXCELLENT, device_type='d', device_age=2)],
+    devices = [Device(id=2, device_status=DeviceStatus.EXCELLENT, device_type='d', device_age=2)]
 )
-
 orbit_one.generate_event()
