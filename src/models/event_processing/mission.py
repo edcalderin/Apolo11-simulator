@@ -15,9 +15,9 @@ class Mission(BaseModel):
     def duration(self)->int:
         return (self.end_date - self.start_date).days
 
-    def generate_event(self, name:str) -> None:
+    def generate_event(self, name: str) -> None:
         model_dict = self.model_dump()
         for device in model_dict.get('devices'):
-            device['hash'] = Device(**device).get_hash(self.__class__.__name__)
+            device['hash'] = Device(**device).get_hash(str(self.start_date), self.__class__.__name__)
         with open(name, 'w+') as file:
             yaml.dump(model_dict, file)

@@ -15,6 +15,6 @@ class Device(BaseModel):
         hash.update(mission_date.encode())
         hash.update(mission_name.encode())
         hash.update(self.device_type.encode())
-        hash.update(self.device_status.value.encode())
+        hash.update(self.device_status.encode())
         return hash.hexdigest()
 
