@@ -1,6 +1,6 @@
 from src.models.event_processing.device import Device
-from typing import List, Optional
-from pydantic import BaseModel, computed_field, Field
+from typing import List
+from pydantic import BaseModel, computed_field
 import yaml
 from datetime import datetime
 
