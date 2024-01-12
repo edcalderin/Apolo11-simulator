@@ -24,6 +24,9 @@ class Mission(BaseModel):
         hash.update(self.device.device_status.encode())
         return hash.hexdigest()
 
+    def __str__(self) -> str:
+        return 'APL'
+    
     def generate_event(self, name: str) -> None:
         with open(name, 'w+') as file:
             yaml.dump(self.model_dump(), file)

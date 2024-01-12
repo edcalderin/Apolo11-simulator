@@ -8,3 +8,6 @@ class VacMars(Mission):
     @property
     def total_sales(self) -> float:
         return self.number_of_passengers * self.ticket_price
+    
+    def __str__(self) -> str:
+        return f'{super().__str__()}TMRS'

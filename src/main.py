@@ -3,7 +3,7 @@ from src.models.report_processing.report_builder import ReportBuilder
 
 #logica argparse
 #si es en modo generador
-event_manager = EventManager(frequency_seconds=10, number_of_files=(7, 10))
+event_manager = EventManager(target_path = 'devices', frequency_seconds = 3, range_of_files = (7, 10))
 event_manager()
 
 #si es en modo reporter
