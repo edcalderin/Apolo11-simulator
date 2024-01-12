@@ -7,4 +7,5 @@ class Device(BaseModel):
     device_type: str
     device_status: DeviceStatus | str
     device_age: int | str
+    device_description: str
     
