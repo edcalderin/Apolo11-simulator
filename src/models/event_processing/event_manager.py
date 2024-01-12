@@ -70,8 +70,7 @@ class EventManager(BaseModel):
 
             elif choice is Unkn:
                 name: Path = device_path.joinpath(f'APLUNKN-{i}.log')
-                unkn = Unkn(uuid='1', 
-                            date=datetime.now(), 
+                unkn = Unkn(date=datetime.now(),
                             budget='unknown', 
                             device=Device(device_type='unknown', device_status=DeviceStatus.UNKNOWN, device_age='unknown'))
                 unkn.generate_event(name)

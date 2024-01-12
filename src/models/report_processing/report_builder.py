@@ -1,5 +1,5 @@
 from pathlib import Path
-from task_calculator import TaskCalculator
+from src.models.report_processing.task_calculator import TaskCalculator
 
 class ReportBuilder:
     __task_calculator: TaskCalculator

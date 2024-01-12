@@ -5,6 +5,10 @@ from pydantic import computed_field
 class Unkn(Mission):
 
     @property
+    def mission(self) -> str:
+        return super().mission.upper()
+    
+    @property
     def hash(self):
         '''
         Overrides hash property in order to disable hash generation
