@@ -11,71 +11,109 @@ from src.models.event_processing.unkn import Unkn
 from datetime import datetime
 import random
 from pathlib import Path
+import sched
+import time
 
 class EventManager(BaseModel):
+    target_path: str
     frequency_seconds: int
-    number_of_files: Tuple[int, int]
+    range_of_files: Tuple[int, int]
 
-    def __generate_files(self):
-        min_files, max_files = self.number_of_files
-        n_files: int = random.randint(min_files, max_files)
-        choices: List = random.choices([ColonyMoon, GalaxyTwo, OrbitOne, VacMars, Unkn], k = n_files)
+    def __random_device(self, mission_class) -> Device:
+        '''
+        Description here
         
-        device_path = Path('devices')
-        device_path.mkdir(exist_ok=True) 
-             
-        for i, choice in enumerate(choices):
-            if choice is ColonyMoon:
-                name: Path = device_path.joinpath(f'APLCLMN-{i}.log')
-                colony_moon = ColonyMoon(
-                    date = datetime.now(), 
-                    budget = 2,
-                    size = 5,
-                    device = Device(device_status=DeviceStatus.EXCELLENT, device_type='d', device_age=2)
-                )
-                colony_moon.generate_event(name)
-                
-            elif choice is OrbitOne:
-                name: Path = device_path.joinpath(f'APLORBONE-{i}.log')
-                orbit_one = OrbitOne(
-                    date = datetime.now(), 
-                    budget = 2,
-                    satellite_name = 'OpenAI',
-                    service_type = ServiceType.UPDATE,
-                    device = Device(device_status=DeviceStatus.EXCELLENT, device_type='d', device_age=2)
-                )
-                orbit_one.generate_event(name)
-                
-            elif choice is GalaxyTwo:
-                name: Path = device_path.joinpath(f'APLGALXONE-{i}.log')
-                galaxy_two = GalaxyTwo(
-                    date = datetime.now(), 
-                    budget = 2,
-                    distance_ly = 15,
-                    galaxy_name='Orion',
-                    device = Device(device_status=DeviceStatus.EXCELLENT, device_type='d', device_age=2)
-                )
-                galaxy_two.generate_event(name)
-                
-            elif choice is VacMars:
-                name: Path = device_path.joinpath(f'APLTMRS-{i}.log')
-                vac_mars = VacMars(
-                    date = datetime.now(), 
-                    budget = 2,
-                    number_of_passengers= 3,
-                    ticket_price = 15,
-                    device = Device(device_status=DeviceStatus.EXCELLENT, device_type='d', device_age=2)
-                )
-                vac_mars.generate_event(name)
+        Parameters:
+        -----------
+        
+        Returns:
+        --------
+        
+        '''
+        
+        if mission_class is Unkn:
+            return Device(
+                device_type = 'unknown', 
+                device_status = DeviceStatus.UNKNOWN, 
+                device_age = 'unknown',
+                device_description = 'unknown'
+            )
+        else:
+            return Device(
+                device_status = random.choice([
+                    DeviceStatus.EXCELLENT, 
+                    DeviceStatus.FAULTY, 
+                    DeviceStatus.GOOD, 
+                    DeviceStatus.KILLED, 
+                    DeviceStatus.WARNING, 
+                    DeviceStatus.UNKNOWN
+                ]),
+                device_type = 'd',
+                device_description = 'any description',
+                device_age = random.randint(2, 20)
+            )
+        
+    def __generate_files(self) -> None:
+        '''
+        description here
+        
+        Parameters:
+        -----------
 
-            elif choice is Unkn:
-                name: Path = device_path.joinpath(f'APLUNKN-{i}.log')
-                unkn = Unkn(uuid='1', 
-                            date=datetime.now(), 
-                            budget='unknown', 
-                            device=Device(device_type='unknown', device_status=DeviceStatus.UNKNOWN, device_age='unknown'))
-                unkn.generate_event(name)
+        Returns:
+        --------
+            None
+        '''
+
+        min_files, max_files = self.range_of_files
+        
+        number_of_files: int = random.randint(min_files, max_files)
+        
+        mission_classes: List = random.choices([ColonyMoon, OrbitOne, GalaxyTwo, VacMars, Unkn], k = number_of_files)
+        
+        # Create "devices" directory if it does not exist
+        device_path = Path(self.target_path)
+        device_path.mkdir(exist_ok = True) 
+             
+        for i, mission_class in enumerate(mission_classes, 1):
+
+            # Params for each mission class whose keys correspond to the class
+            mission_params = {
+                ColonyMoon: {
+                    'date': datetime.now(), 
+                    'budget': 2,
+                    'size': 5
+                },
+                OrbitOne: {
+                    'date' : datetime.now(), 
+                    'budget' : 2,
+                    'satellite_name' : 'OpenAI',
+                    'service_type' : ServiceType.UPDATE
+                },
+                GalaxyTwo: {
+                    'date': datetime.now(), 
+                    'budget': 2,
+                    'distance_ly': 15,
+                    'galaxy_name': 'Orion'
+                },
+                VacMars: {
+                    'date': datetime.now(), 
+                    'budget': 2,
+                    'number_of_passengers': 3,
+                    'ticket_price': 15
+                },
+                Unkn: {
+                    'date': datetime.now(),
+                    'budget': 'unknown'
+                }
+            }
+
+            # Create an instance based on one of the dictionary keys.
+            mission_instance = mission_class(**mission_params[mission_class], device = self.__random_device(mission_class))
                 
+            name: Path = device_path.joinpath(f'{str(mission_instance)}-{i}.log')
+
+            mission_instance.generate_event(name)
+
     def __call__(self) -> Any:
-        # aqui va schedule
         self.__generate_files()
