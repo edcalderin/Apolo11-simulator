@@ -13,3 +13,6 @@ class ReportBuilder:
 
     def move_files(self, target_path: Path) -> None:
         pass
+    
+    def show_report():
+        pass

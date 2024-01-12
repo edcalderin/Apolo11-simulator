@@ -7,6 +7,3 @@ class OrbitOne(Mission):
     satellite_name: str
     service_type: ServiceType
     
-    def generate_event(self) -> None:
-        name: str = f'APLORBONE-0001.log'
-        super().generate_event(name)
