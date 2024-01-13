@@ -1,4 +1,4 @@
-devices = {
+{
     "Spacecraft Rocket": "Medio para salir de la atmósfera terrestre.",
     "Command and Service Module": "Cápsula que alberga a los astronautas y proporciona sistemas esenciales.",
     "Space Suits": "Para proteger a los astronautas en el espacio.",
