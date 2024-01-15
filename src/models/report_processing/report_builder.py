@@ -1,5 +1,5 @@
 from pathlib import Path
-from task_calculator import TaskCalculator
+from src.models.report_processing.task_calculator import TaskCalculator
 
 class ReportBuilder:
     __task_calculator: TaskCalculator
@@ -12,4 +12,7 @@ class ReportBuilder:
         pass
 
     def move_files(self, target_path: Path) -> None:
+        pass
+    
+    def show_report():
         pass
