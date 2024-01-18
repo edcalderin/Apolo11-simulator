@@ -1,7 +1,7 @@
 from unittest import TestCase
 
-from src.models.event_processing.device import Device
-from src.models.event_processing.device_status import DeviceType
+from apollo11_simulator.models.event_processing.device import Device
+from apollo11_simulator.models.event_processing.device_status import DeviceType
 
 
 class GenerateHashTest(TestCase):

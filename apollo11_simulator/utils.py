@@ -48,10 +48,10 @@ class Utils:
             with open(path) as file:
                 return yaml.safe_load(file)
 
-        except yaml.YAMLError as e:
-            print(f'Invalid yaml file or corrupted yaml file: {e}')
-            raise yaml.YAMLError(str(e))
+        except yaml.YAMLError as yaml_error:
+            print(f'Invalid or corrupted yaml file: {str(yaml_error)}')
+            raise yaml_error
 
         except Exception as e:
-            print(f'Error by reading yaml file: {e}')
-            raise Exception(str(e))
+            print(f'Error by reading yaml file: {str(e)}')
+            raise e

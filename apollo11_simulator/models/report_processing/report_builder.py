@@ -1,5 +1,5 @@
 from pathlib import Path
-from src.models.report_processing.task_calculator import TaskCalculator
+from apollo11_simulator.models.report_processing.task_calculator import TaskCalculator
 
 class ReportBuilder:
     __task_calculator: TaskCalculator

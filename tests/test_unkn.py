@@ -1,9 +1,9 @@
 import pytest
 import uuid  # Importa el módulo uuid
 from datetime import datetime
-from src.models.event_processing.unkn import Unkn
-from src.models.event_processing.device import Device
-from src.models.event_processing.device_status import DeviceStatus
+from apollo11_simulator.models.event_processing.unkn import Unkn
+from apollo11_simulator.models.event_processing.device import Device
+from apollo11_simulator.models.event_processing.device_status import DeviceStatus
 
 def test_generate_event_for_unkn():
         
