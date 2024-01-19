@@ -1,13 +1,9 @@
 from typing import Any, List, Tuple
 from pydantic import BaseModel
-from src.models.event_processing.colony_moon import ColonyMoon
-from src.models.event_processing.device import Device
-from src.models.event_processing.device_status import DeviceStatus
-from src.models.event_processing.galaxy_two import GalaxyTwo
-from src.models.event_processing.orbit_one import OrbitOne
-from src.models.event_processing.service_type import ServiceType
-from src.models.event_processing.vac_mars import VacMars
-from src.models.event_processing.unkn import Unkn
+from apollo11_simulator.models.event_processing.mission import ColonyMoon, GalaxyTwo, OrbitOne, Unkn, VacMars
+from apollo11_simulator.models.event_processing.device import Device
+from apollo11_simulator.models.event_processing.device_status import DeviceStatus
+from apollo11_simulator.models.event_processing.service_type import ServiceType
 from datetime import datetime
 import random
 from pathlib import Path

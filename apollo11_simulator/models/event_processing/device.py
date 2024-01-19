@@ -1,4 +1,4 @@
-from src.models.event_processing.device_status import DeviceStatus
+from apollo11_simulator.models.event_processing.device_status import DeviceStatus
 from pydantic import ConfigDict
 from pydantic import BaseModel
 
