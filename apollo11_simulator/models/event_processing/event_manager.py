@@ -1,5 +1,5 @@
 from typing import Any, List, Tuple
-from pydantic import BaseModel
+from pydantic import BaseModel, Field, field_validator
 from apollo11_simulator.models.event_processing.mission import ColonyMoon, GalaxyTwo, OrbitOne, Unkn, VacMars
 from apollo11_simulator.models.event_processing.device import Device
 from apollo11_simulator.models.event_processing.device_status import DeviceStatus
@@ -7,11 +7,31 @@ from apollo11_simulator.models.event_processing.service_type import ServiceType
 from datetime import datetime
 import random
 from pathlib import Path
+from time import sleep
 
 class EventManager(BaseModel):
-    target_path: str
-    frequency_seconds: int
+    '''
+
+    '''
+
+    target_path: str = Field(min_length = 1)
+    frequency_seconds: int = Field(gt = 0)
     range_of_files: Tuple[int, int]
+
+    @field_validator('range_of_files')
+    def validate_range_of_files(cls, values: Tuple[int, int]) -> Tuple[int, int]:
+        v1, v2 = values
+
+        if v1 < 0 or v2 < 0:
+            raise ValueError('All the values must be positive')
+
+        if v1 == v2 == 0:
+            raise ValueError('Both values must be different from zero')
+
+        if v1 > v2:
+            raise ValueError('The second value must be greater than the first one')
+
+        return values
 
     def __random_device(self, mission_class) -> Device:
         '''
@@ -19,12 +39,12 @@ class EventManager(BaseModel):
 
         Parameters:
         -----------
-            - mission_class: Class which inherits from Mission class, if it is Unkn class then it will return a
-                             Device object with hardcoded values equal to "unknown"
+        - mission_class: Class which inherits from Mission class, if it is Unkn class
+        then it will return a Device object with hardcoded values equal to "unknown"
 
         Returns:
         --------
-            Object of Device type
+        Object of Device type
         '''
 
         if mission_class is Unkn:
@@ -55,10 +75,10 @@ class EventManager(BaseModel):
 
         Parameters:
         -----------
-            - epoch: Current iteration
+        - epoch: Current iteration
         Returns:
         --------
-            None
+        None
         '''
 
         print('Generating files...')
@@ -109,12 +129,19 @@ class EventManager(BaseModel):
             # Create an instance based on one of the dictionary keys.
             mission_instance = mission_class(**mission_params[mission_class], device = self.__random_device(mission_class))
 
-            name: Path = device_path.joinpath(f'{str(mission_instance)}-00{epoch}{i}.log')
+            name: Path = device_path.joinpath(f'{str(mission_instance)}-{epoch}{i}.log')
 
             mission_instance.generate_event(name)
 
     def __call__(self) -> Any:
         try:
-            self.__generate_files(1)
+            epoch: int = 0
+            while True:
+                self.__generate_files(epoch)
+                sleep(self.frequency_seconds)
+                epoch += 1
+
+        except KeyboardInterrupt:
+            print('The process was interrupted!')
         except Exception as e:
-            print(e)
+            print(str(e))
