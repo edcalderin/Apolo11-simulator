@@ -7,7 +7,7 @@ import pytest
 class TestReadYaml:
     '''
     Class to test read_yaml method from Utils class.
-    This method has 3 possible ouput:
+    This method has 3 possible outputs:
     * Yaml file successfully read.
     * YAMLError: Corrupt yaml file exception
     * Exception: Unknown error, probably due to the fact the file does not exist.

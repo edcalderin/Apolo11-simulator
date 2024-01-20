@@ -11,7 +11,19 @@ from time import sleep
 
 class EventManager(BaseModel):
     '''
+    Generate event files in yaml format by calling the instance of the class:
 
+    Example:
+
+    event_manager = EventManager(...)\n
+    event_manager()
+
+    Attributes:
+    ----------
+    - target_path: Directory name, it will be created if it does not exist
+    - frequency_seconds: Frequency in seconds at which event files will be generated
+    - range_of_files: A tuple with 2 values indicating the minimum and maximun number
+    of events to generate in each iteration
     '''
 
     target_path: str = Field(min_length = 1)
@@ -20,6 +32,17 @@ class EventManager(BaseModel):
 
     @field_validator('range_of_files')
     def validate_range_of_files(cls, values: Tuple[int, int]) -> Tuple[int, int]:
+        '''
+        Validate the range_of_file with the following rules:
+        - Both Values must be positive.
+        - Both values must be different from zero.
+        - The second value must be greater than the first one.
+
+        Returns:
+        --------
+        Value of the tuple
+        '''
+
         v1, v2 = values
 
         if v1 < 0 or v2 < 0:
@@ -76,6 +99,7 @@ class EventManager(BaseModel):
         Parameters:
         -----------
         - epoch: Current iteration
+
         Returns:
         --------
         None
@@ -136,6 +160,7 @@ class EventManager(BaseModel):
     def __call__(self) -> Any:
         try:
             epoch: int = 0
+
             while True:
                 self.__generate_files(epoch)
                 sleep(self.frequency_seconds)
