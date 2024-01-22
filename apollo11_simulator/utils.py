@@ -39,12 +39,12 @@ class Utils:
 
         Returns:
         --------
-            Dictionary containing items from the file.
+        Dictionary containing items from the file.
 
         Exceptions:
         -----------
-            - YAMLError: Invalid yaml file
-            - Exception: Error by reading file
+        - YAMLError: Invalid yaml file
+        - Exception: Error by reading file
         '''
         with open(path) as file:
             return yaml.safe_load(file)
@@ -61,12 +61,12 @@ class Utils:
 
         Returns:
         --------
-            Dictionary containing items from the file.
+        Dictionary containing items from the file.
 
         Exceptions:
         -----------
-            - JSONDecodeError: Invalid json file
-            - Exception: Error by reading file
+        - JSONDecodeError: Invalid json file
+        - Exception: Error by reading file
         '''
         with open(path) as file:
             return json.load(file)
