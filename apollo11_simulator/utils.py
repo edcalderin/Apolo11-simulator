@@ -2,6 +2,7 @@ from datetime import datetime
 from pathlib import Path
 import yaml
 from typing import Dict
+import json
 
 class Utils:
     '''
@@ -54,4 +55,36 @@ class Utils:
 
         except Exception as e:
             print(f'Error by reading yaml file: {str(e)}')
+            raise e
+
+
+    @staticmethod
+    def read_json(path: Path) -> Dict:
+        '''
+        Read a json file given a path
+
+        Parameters:
+        -----------
+        - path: Path of the file as Path object
+
+        Returns:
+        --------
+            Dictionary containing items from the file.
+
+        Exceptions:
+        -----------
+            - JSONDecodeError: Invalid json file
+            - Exception: Error by reading file
+        '''
+
+        try:
+            with open(path) as file:
+                return json.load(file)
+
+        except json.JSONDecodeError as decode_error:
+            print(f'Invalid or corrupted json file: {str(decode_error)}')
+            raise decode_error
+
+        except Exception as e:
+            print(f'Error by reading json file: {str(e)}')
             raise e
