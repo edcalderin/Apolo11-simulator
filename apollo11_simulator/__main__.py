@@ -1,6 +1,6 @@
 import argparse
 
-# from apollo11_simulator.models.event_processing.event_manager import EventManager
+from apollo11_simulator.models.event_processing.event_manager import EventManager
 # from apollo11_simulator.models.report_processing.report_builder import ReportBuilder
 
 # logica argparse
