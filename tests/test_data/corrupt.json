@@ -1,0 +1,8 @@
+{
+    "correct": "well formated!",
+    "invalid": {
+        "first item",
+        "second item",
+        "third item"
+    }
+}

@@ -2,6 +2,8 @@ from datetime import datetime
 from pathlib import Path
 import yaml
 from typing import Dict
+import json
+from apollo11_simulator.decorators import CatchFileExceptions
 
 class Utils:
     '''
@@ -26,6 +28,7 @@ class Utils:
         return date.strftime(custom_format)
 
     @staticmethod
+    @CatchFileExceptions
     def read_yaml(path: Path) -> Dict:
         '''
         Read a yaml file given a path
@@ -36,22 +39,34 @@ class Utils:
 
         Returns:
         --------
-            Dictionary containing items from the file.
+        Dictionary containing items from the file.
 
         Exceptions:
         -----------
-            - YAMLError: Invalid yaml file
-            - Exception: Error by reading file
+        - YAMLError: Invalid yaml file
+        - Exception: Error by reading file
         '''
+        with open(path) as file:
+            return yaml.safe_load(file)
 
-        try:
-            with open(path) as file:
-                return yaml.safe_load(file)
+    @staticmethod
+    @CatchFileExceptions
+    def read_json(path: Path) -> Dict:
+        '''
+        Read a json file given a path
 
-        except yaml.YAMLError as yaml_error:
-            print(f'Invalid or corrupted yaml file: {str(yaml_error)}')
-            raise yaml_error
+        Parameters:
+        -----------
+        - path: Path of the file as Path object
 
-        except Exception as e:
-            print(f'Error by reading yaml file: {str(e)}')
-            raise e
+        Returns:
+        --------
+        Dictionary containing items from the file.
+
+        Exceptions:
+        -----------
+        - JSONDecodeError: Invalid json file
+        - Exception: Error by reading file
+        '''
+        with open(path) as file:
+            return json.load(file)
