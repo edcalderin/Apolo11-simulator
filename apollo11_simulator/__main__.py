@@ -13,17 +13,11 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     match args.operation:
-        case 'generate-events':
-            print('Running in "generate events" mode')
-
-            event_manager = EventManager(input_data_file = 'input_data/simulation.json',
-                                         target_path = 'devices',
-                                         frequency_seconds = 3,
-                                         range_of_files = (2, 4))
-            event_manager()
-
-        case 'generate-report':
-            print('Running in "generate report" mode')
-
-            reporter = ReportBuilder.read_events('devices')
-            reporter.show_report()
+            case 'generate-events':
+                print('Running in "generate events" mode')
+                event_manager = EventManager(input_data_file = 'input_data/simulation.json', target_path='devices', frequency_seconds=3, range_of_files=(7, 10))
+                event_manager()
+            case 'generate-report':
+                print('Running in "generate report" mode')
+                reporter = ReportBuilder.read_events('devices')
+                reporter()

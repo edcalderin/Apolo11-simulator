@@ -6,6 +6,8 @@ from datetime import datetime
 import hashlib
 
 from apollo11_simulator.models.event_processing.service_type import ServiceType
+from apollo11_simulator.utils import Utils
+
 
 class Mission(BaseModel):
     date: datetime
@@ -21,7 +23,7 @@ class Mission(BaseModel):
     @property
     def hash(self) -> str:
         hash = hashlib.sha256()
-        hash.update(str(self.date).encode())
+        hash.update(Utils.transform_date(self.date).encode())
         hash.update(self.mission.encode())
         hash.update(self.device.device_type.encode())
         hash.update(self.device.device_status.encode())

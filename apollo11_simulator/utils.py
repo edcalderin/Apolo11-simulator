@@ -12,7 +12,7 @@ class Utils:
     '''
 
     @staticmethod
-    def to_ddmmyyHHMISS(date: datetime) -> str:
+    def transform_date(date: datetime) -> str:
         '''
         To transform date in format ddmmyyHHMMSS
 

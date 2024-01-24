@@ -1,7 +1,7 @@
 import os
 from typing import List
 from pathlib import Path
-
+from datetime import datetime
 
 import pandas as pd
 
@@ -60,11 +60,11 @@ class ReportBuilder:
         '''
         Path(origin_path + '/' + filename).rename(target_path + '/' + filename)
 
-    def show_report(self):
+    def __call__(self):
         task_calculator = TaskCalculator(self.__events)
         line_jump = ['\n']*2
-
-        with open("report.txt", "w+") as file:
+        report_name: str = f"APLSTATS-REPORTE-{Utils.transform_date(datetime.now())}.log"
+        with open(report_name, "w+") as file:
             for attr in dir(task_calculator):
             # Getting all the attributes of task_calculator object to filter by "task_" pattern.
             # These attributes correspond to methods that return a particular report
