@@ -6,6 +6,4 @@ class Device(BaseModel):
     model_config = ConfigDict(use_enum_values=True)
     device_type: str
     device_status: DeviceStatus | str
-    device_age: int | str
     device_description: str
-    

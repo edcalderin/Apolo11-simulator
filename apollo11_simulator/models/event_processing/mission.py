@@ -14,7 +14,7 @@ class Mission(BaseModel):
 
     @computed_field
     @property
-    def mission(self)-> str:
+    def mission(self) -> str:
         return self.__class__.__name__
 
     @computed_field
@@ -42,7 +42,6 @@ class ColonyMoon(Mission):
 
 class GalaxyTwo(Mission):
     galaxy_name: str
-    distance_ly: int
 
     def __str__(self) -> str:
         return f'{super().__str__()}GALXONE'
@@ -89,6 +88,7 @@ class VacMars(Mission):
     number_of_passengers: int
     ticket_price: float
 
+    @computed_field
     @property
     def total_sales(self) -> float:
         return self.number_of_passengers * self.ticket_price
