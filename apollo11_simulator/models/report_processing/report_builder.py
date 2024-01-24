@@ -1,26 +1,21 @@
-import os
-from typing import List
 from pathlib import Path
 from datetime import datetime
-
+import shutil
 import pandas as pd
 
 from apollo11_simulator.models.report_processing.task_calculator import TaskCalculator
 from apollo11_simulator.utils import Utils
-
+from yaml import YAMLError
 
 class ReportBuilder:
 
-
-    def __init__(self, events: pd.DataFrame) -> None:
+    def __init__(self, events: pd.DataFrame, origin_path: str, target_path: str) -> None:
         self.__events = events
-
-    def yield_file(self, origin_path: str):
-        for file in Path(origin_path).glob('*.log'):
-            yield file
+        self.__origin_path = origin_path
+        self.__target_path = target_path
 
     @classmethod
-    def read_events(cls, origin_path: str):
+    def read_events(cls, origin_path: str, target_path: str):
         '''
         To read files from path and merge content in str
 
@@ -30,35 +25,29 @@ class ReportBuilder:
             str
         '''
 
+        events_df = cls.events_to_dataframe(cls, origin_path)
 
-        event_list: List = []
-        for file in cls.yield_file(cls, origin_path):
-            event = Utils.read_yaml(file)
-            event_list.append(event)
-            #cls.move_files(origin_path, 'backup', file) # TODO: get target path from config file
+        return cls(events_df, origin_path, target_path)
 
-        events_df = cls.events_to_dataframe(cls, event_list)
+    @staticmethod
+    def read_file_map(filename) -> dict:
+        try:
+            event = Utils.read_yaml(filename)
+        except YAMLError:
+            print(f'File {filename} was ignored')
+            event = None
+        except Exception as exc:
+            print('Report builder has stopped', str(exc))
+            exit(-1)
 
-        return cls(events_df)
+        return event
 
-    def events_to_dataframe(self, event_list: List) -> pd.DataFrame:
-        events = pd.DataFrame.from_records(event_list)
+    def events_to_dataframe(self, origin_path: str) -> pd.DataFrame:
+        events = pd.DataFrame.from_records(filter(lambda y: y is not None, map(self.read_file_map, Path(origin_path).glob('*.log'))))
+
         events = pd.concat([events, pd.json_normalize(events["device"])], axis=1)
         events.drop("device", inplace=True, axis=1)
         return events
-
-    def move_files(self, origin_path: str, target_path: str, filename: str) -> None:
-        '''
-        To read files from path and merge content in str
-
-        Parameters:
-        - origin_path: path where the files to read are located
-        - target_path: path where the file will be moved
-        - filename: file name
-        Returns:
-            None
-        '''
-        Path(origin_path + '/' + filename).rename(target_path + '/' + filename)
 
     def __call__(self):
         task_calculator = TaskCalculator(self.__events)
@@ -75,3 +64,6 @@ class ReportBuilder:
                     file.writelines(line_jump)
                     file.write('='*100)
                     file.writelines(line_jump)
+
+        print('Moving files...')
+        shutil.move(self.__origin_path, self.__target_path)
