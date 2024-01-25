@@ -9,8 +9,8 @@ from datetime import datetime
 import random
 from pathlib import Path
 from time import sleep
-
 from apollo11_simulator.utils import Utils
+from apollo11_simulator.config.logger import Logger
 
 class EventManager(BaseModel):
     '''
@@ -34,6 +34,9 @@ class EventManager(BaseModel):
     target_path: str = Field(min_length = 1)
     frequency_seconds: int = Field(gt = 0)
     range_of_files: Tuple[int, int]
+    
+    def __init__(self):
+        self.logger = Logger()
 
     @field_validator('range_of_files')
     def validate_range_of_files(cls, values: Tuple[int, int]) -> Tuple[int, int]:
@@ -113,7 +116,7 @@ class EventManager(BaseModel):
         None
         '''
 
-        print('Generating files...')
+        self.logger.info('Generating files...')
 
         min_files, max_files = self.range_of_files
 
@@ -183,7 +186,7 @@ class EventManager(BaseModel):
                 epoch += 1
 
         except KeyboardInterrupt:
-            print('The process was interrupted!')
+            self.logger.info('The process was interrupted!')
         except Exception as e:
-            print(str(e))
+            self.logger.exception(f'An unexpected error ocurred: {str(e)}')
             raise e
