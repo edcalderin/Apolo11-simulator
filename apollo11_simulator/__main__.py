@@ -19,5 +19,5 @@ if __name__ == '__main__':
                 event_manager()
             case 'generate-report':
                 print('Running in "generate report" mode')
-                reporter = ReportBuilder.read_events('devices')
+                reporter = ReportBuilder.read_events(origin_path = 'devices', target_path='backup')
                 reporter()
