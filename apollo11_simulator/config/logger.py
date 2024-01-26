@@ -3,10 +3,9 @@ import logging
 from logging import handlers
 from pathlib import Path
 
-Class Logger:
-
+class Logger:
+    @staticmethod
     def get_logger(
-        self,
         module_name: str,
         log_location: str = 'logs',
         log_format: str = '%Y%m%d%H%M%S',

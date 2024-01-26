@@ -1,6 +1,9 @@
 from json import JSONDecodeError
 from typing import Any, Callable
 from yaml import YAMLError
+from apollo11_simulator.config.logger import Logger
+
+logger = Logger.get_logger("decorators")
 
 class CatchFileExceptions:
     '''
@@ -21,9 +24,9 @@ class CatchFileExceptions:
             return self._function(*args, **kwds)
 
         except (YAMLError, JSONDecodeError) as error:
-            print(f'Invalid or corrupted file: {str(error)}')
+            logger.error(f'Invalid or corrupted file: {str(error)}')
             raise error
 
         except Exception as e:
-            print(f'Error by reading file: {str(e)}')
+            logger.error(f'Error by reading file: {str(e)}')
             raise e

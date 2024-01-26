@@ -1,0 +1,8 @@
+event_params:
+  frequency_seconds: 2
+  input_data_file: input_data/simulation.json
+  devices_path: devices
+  backup_path: backup
+  range_of_files:
+    min: 2
+    max: 5

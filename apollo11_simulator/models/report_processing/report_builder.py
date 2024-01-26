@@ -1,11 +1,16 @@
 from pathlib import Path
 from datetime import datetime
+
 import shutil
+
 import pandas as pd
 
 from apollo11_simulator.models.report_processing.task_calculator import TaskCalculator
 from apollo11_simulator.utils import Utils
 from yaml import YAMLError
+from apollo11_simulator.config.logger import Logger
+
+logger = Logger.get_logger("report_builder")
 
 class ReportBuilder:
 
@@ -34,10 +39,10 @@ class ReportBuilder:
         try:
             event = Utils.read_yaml(filename)
         except YAMLError:
-            print(f'File {filename} was ignored')
+            logger.warning(f'File {filename} was ignored')
             event = None
         except Exception as exc:
-            print('Report builder has stopped', str(exc))
+            logger.error(f'Report builder has stopped {str(exc)}')
             exit(-1)
 
         return event
@@ -48,8 +53,8 @@ class ReportBuilder:
         events = pd.concat([events, pd.json_normalize(events["device"])], axis=1)
         events.drop("device", inplace=True, axis=1)
         return events
-
     def __call__(self):
+        logger.info(f'Processing_events_from {Path(self.__origin_path).absolute()}')
         task_calculator = TaskCalculator(self.__events)
         line_jump = ['\n']*2
         report_name: str = f"APLSTATS-REPORTE-{Utils.transform_date(datetime.now())}.log"
@@ -65,5 +70,5 @@ class ReportBuilder:
                     file.write('='*100)
                     file.writelines(line_jump)
 
-        print('Moving files...')
+        logger.info(f'Moving files to {Path(self.__target_path).absolute()}')
         shutil.move(self.__origin_path, self.__target_path)
