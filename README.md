@@ -20,7 +20,7 @@ El propósito central de este proyecto es evaluar nuestras destrezas y competenc
 
 Como estudiantes, nos enfrentamos al desafío emocionante de colaborar en cuatro proyectos visionarios de la NASA: OrbitOne, ColonyMoon, VacMars y GalaxyTwo. Conscientes de la importancia de evitar errores, estamos contribuyendo al desarrollo de un sistema de monitoreo que opera cada 20 segundos, permitiéndonos tener un control minucioso de los dispositivos empleados en cada misión.
 
-Hemos sido convocados como ingenieros en jefe, y se nos ha asignado la tarea de crear el programa "Apolo-11". Este programa, operado manualmente por el comandante, desempeñará un papel crucial en el éxito de estas trascendentales iniciativas científicas y exploratorias. Nos sentimos honrados de ser parte de este proyecto significativo que contribuirá al avance de la exploración espacial y a la seguridad de los astronautas y turistas involucrados.
+Hemos sido convocados como ingenieros en jefe, y se nos ha asignado la tarea de crear el programa "APOLLO11-SIMULATOR". Este programa, operado manualmente por el comandante, desempeñará un papel crucial en el éxito de estas trascendentales iniciativas científicas y exploratorias. Nos sentimos honrados de ser parte de este proyecto significativo que contribuirá al avance de la exploración espacial y a la seguridad de los astronautas y turistas involucrados.
 
 ## Directory layout
 ```
@@ -40,7 +40,7 @@ Hemos sido convocados como ingenieros en jefe, y se nos ha asignado la tarea de 
 
 ![Alt text](./images/classes_diagram.png)
 
-El programa "Apolo-11" consta de dos componentes principales:
+El programa "APOLLO11-SIMULATOR" consta de dos componentes principales:
 
 ### Generator:
 * Responsable de la simulación de datos entre componentes.
@@ -65,7 +65,7 @@ El programa "APOLLO11-SIMULATOR" consta de dos partes principales que se ejecuta
 ### Generator
 Ejecute el siguiente comando para iniciar la simulación de datos:
 
-python -m apollo11_simulator generate_events
+python -m apollo11_simulator generate-events
 
 ### Reporter
 Ejecute el siguiente comando para generar reportes y realizar el manejo de archivos:
