@@ -1,9 +1,13 @@
+import json
 from datetime import datetime
 from pathlib import Path
-import yaml
 from typing import Dict
-import json
+
+import yaml
+
+from apollo11_simulator.config import config
 from apollo11_simulator.decorators import CatchFileExceptions
+
 
 class Utils:
     '''
@@ -24,7 +28,7 @@ class Utils:
         --------
             str
         '''
-        custom_format = '%d%m%y%H%M%S'
+        custom_format = config["utils"]["custom_format"]
         return date.strftime(custom_format)
 
     @staticmethod

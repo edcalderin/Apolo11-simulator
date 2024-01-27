@@ -1,6 +1,7 @@
+from pydantic import BaseModel, ConfigDict
+
 from apollo11_simulator.models.event_processing.device_status import DeviceStatus
-from pydantic import ConfigDict
-from pydantic import BaseModel
+
 
 class Device(BaseModel):
     model_config = ConfigDict(use_enum_values=True)

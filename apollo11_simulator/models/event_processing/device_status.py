@@ -1,5 +1,6 @@
 from enum import Enum
 
+
 class DeviceStatus(Enum):
     EXCELLENT = 'excellent'
     GOOD = 'good'

@@ -1,16 +1,25 @@
-from typing import Any, Dict, List, Tuple
-from pydantic import BaseModel, Field, field_validator
-from apollo11_simulator.models.event_processing.mission import (
-    ColonyMoon, GalaxyTwo, OrbitOne, Unkn, VacMars)
-from apollo11_simulator.models.event_processing.device import Device
-from apollo11_simulator.models.event_processing.device_status import DeviceStatus
-from apollo11_simulator.models.event_processing.service_type import ServiceType
-from datetime import datetime
 import random
+from datetime import datetime
 from pathlib import Path
 from time import sleep
+from typing import Any, Dict, List, Tuple
+
+from pydantic import BaseModel, Field, field_validator
+
+from apollo11_simulator.logger import Logger
+from apollo11_simulator.models.event_processing.device import Device
+from apollo11_simulator.models.event_processing.device_status import DeviceStatus
+from apollo11_simulator.models.event_processing.mission import (
+    ColonyMoon,
+    GalaxyTwo,
+    OrbitOne,
+    Unkn,
+    VacMars,
+)
+from apollo11_simulator.models.event_processing.service_type import ServiceType
 from apollo11_simulator.utils import Utils
-from apollo11_simulator.config.logger import Logger
+
+logger = Logger.get_logger("event_manager")
 
 logger = Logger.get_logger("event_manager")
 
@@ -26,7 +35,8 @@ class EventManager(BaseModel):
     Attributes:
     ----------
     - input_data_file: Path to directory with test data
-    - target_path: Path to directory that will contain event files. It will be created if it does not exist
+    - target_path: Path to directory that will contain event files.
+      It will be created if it does not exist
     - frequency_seconds: Frequency in seconds at which event files will be generated
     - range_of_files: A tuple with 2 values indicating the minimum and maximun number
     of events to generate in each iteration
@@ -38,7 +48,7 @@ class EventManager(BaseModel):
     range_of_files: Tuple[int, int]
 
     @field_validator('range_of_files')
-    def validate_range_of_files(cls, values: Tuple[int, int]) -> Tuple[int, int]:
+    def validate_range_of_files(cls, values: Tuple[int, int]) -> Tuple[int, int]: # noqa
         '''
         Validate the range_of_file with the following rules:
         - Both Values must be positive.
@@ -63,7 +73,8 @@ class EventManager(BaseModel):
 
         return values
 
-    def __random_device(self, mission_class, devices_list: List[Tuple[str, str]]) -> Device:
+    def __random_device(self, mission_class, devices_list:
+                        List[Tuple[str, str]]) -> Device:
         '''
         Return a random device of type Device class
 
@@ -85,11 +96,11 @@ class EventManager(BaseModel):
                 device_description = 'unknown'
             )
         else:
-            random_device: Tuple = random.choice(devices_list)
+            random_device: Tuple = random.choice(devices_list) # noqa
             random_device_type, random_device_description = random_device
 
             return Device(
-                device_status = random.choice([
+                device_status = random.choice([ # noqa
                     DeviceStatus.EXCELLENT,
                     DeviceStatus.FAULTY,
                     DeviceStatus.GOOD,
@@ -119,9 +130,9 @@ class EventManager(BaseModel):
 
         min_files, max_files = self.range_of_files
 
-        number_of_files: int = random.randint(min_files, max_files)
+        number_of_files: int = random.randint(min_files, max_files) # noqa
 
-        mission_classes: List = random.choices(
+        mission_classes: List = random.choices( # noqa
             [ColonyMoon, OrbitOne, GalaxyTwo, VacMars, Unkn], k = number_of_files)
 
         # Transforming dictionary of devices to list of tuples
@@ -133,33 +144,35 @@ class EventManager(BaseModel):
 
         for i, mission_class in enumerate(mission_classes, 1):
 
-            random_budget: int = random.randint(*input_data.get('budget'))
+            random_budget: int = random.randint(*input_data.get('budget')) # noqa
 
             # Params for each mission class whose keys correspond to the class name
             mission_params = {
                 ColonyMoon: {
                     'date': datetime.now(),
                     'budget': random_budget,
-                    'size': random.randint(*input_data.get('size'))
+                    'size': random.randint(*input_data.get('size')) # noqa
                 },
                 OrbitOne: {
                     'date': datetime.now(),
                     'budget': random_budget,
-                    'satellite_name': random.choice(input_data.get('satellite_names')),
-                    'service_type': random.choice(
-                        [ServiceType.UPDATE, ServiceType.REPARATION, ServiceType.REPLACEMENT]
+                    'satellite_name': random.choice(input_data.get('satellite_names')), # noqa
+                    'service_type': random.choice( # noqa
+                        [ServiceType.UPDATE, ServiceType.REPARATION,
+                         ServiceType.REPLACEMENT]
                     )
                 },
                 GalaxyTwo: {
                     'date': datetime.now(),
                     'budget': random_budget,
-                    'galaxy_name': random.choice(input_data.get('galaxy_names')),
+                    'galaxy_name': random.choice(input_data.get('galaxy_names')), # noqa
                 },
                 VacMars: {
                     'date': datetime.now(),
                     'budget': random_budget,
-                    'number_of_passengers': random.randint(*input_data.get('number_of_passengers')),
-                    'ticket_price': random.randint(*input_data.get('ticket_price'))
+                    'number_of_passengers': random.randint # noqa
+                    (*input_data.get('number_of_passengers')),
+                    'ticket_price': random.randint(*input_data.get('ticket_price')) # noqa
                 },
                 Unkn: {
                     'date': datetime.now(),
@@ -169,7 +182,9 @@ class EventManager(BaseModel):
 
             # Create an instance based on one of the dictionary keys
             mission_instance = mission_class(**mission_params[mission_class],
-                                             device = self.__random_device(mission_class, devices_list))
+                                             device = self.__random_device(
+                                                 mission_class,
+                                                                           devices_list))
 
             name: Path = device_path.joinpath(f'{str(mission_instance)}-{epoch}{i}.log')
 

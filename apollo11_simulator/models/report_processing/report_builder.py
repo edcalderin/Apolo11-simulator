@@ -1,20 +1,20 @@
-from pathlib import Path
-from datetime import datetime
-
 import shutil
+from datetime import datetime
+from pathlib import Path
 
 import pandas as pd
+from yaml import YAMLError
 
+from apollo11_simulator.logger import Logger
 from apollo11_simulator.models.report_processing.task_calculator import TaskCalculator
 from apollo11_simulator.utils import Utils
-from yaml import YAMLError
-from apollo11_simulator.config.logger import Logger
 
 logger = Logger.get_logger("report_builder")
 
 class ReportBuilder:
 
-    def __init__(self, events: pd.DataFrame, origin_path: str, target_path: str) -> None:
+    def __init__(self, events: pd.DataFrame,
+                 origin_path: str, target_path: str) -> None:
         self.__events = events
         self.__origin_path = origin_path
         self.__target_path = target_path
@@ -48,7 +48,9 @@ class ReportBuilder:
         return event
 
     def events_to_dataframe(self, origin_path: str) -> pd.DataFrame:
-        events = pd.DataFrame.from_records(filter(lambda y: y is not None, map(self.read_file_map, Path(origin_path).glob('*.log'))))
+        events = pd.DataFrame.from_records(filter(lambda y: y is not None,
+                                                  map(self.read_file_map,
+                                                      Path(origin_path).glob('*.log'))))
 
         events = pd.concat([events, pd.json_normalize(events["device"])], axis=1)
         events.drop("device", inplace=True, axis=1)
@@ -57,10 +59,11 @@ class ReportBuilder:
         logger.info(f'Processing_events_from {Path(self.__origin_path).absolute()}')
         task_calculator = TaskCalculator(self.__events)
         line_jump = ['\n']*2
-        report_name: str = f"APLSTATS-REPORTE-{Utils.transform_date(datetime.now())}.log"
+        report_name: str = f"APLSTATS-REPORTE-{Utils.transform_date(datetime.now())}.log" # noqa
         with open(report_name, "w+") as file:
             for attr in dir(task_calculator):
-            # Getting all the attributes of task_calculator object to filter by "task_" pattern.
+            # Getting all the attributes
+            # of task_calculator object to filter by "task_" pattern.
             # These attributes correspond to methods that return a particular report
                 if attr.startswith('task_'):
                     report_title, report_df = getattr(task_calculator, attr)()
