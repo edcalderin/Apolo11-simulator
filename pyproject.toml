@@ -18,3 +18,20 @@ pytest = "^7.4.4"
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.pytest]
+addopts = [
+    "--doctest-modules",
+    "tests",
+    "--cov-config",
+    ".coveragerc",
+    "--cov-report",
+    "term-missing",
+    "--cov-report",
+    "html",
+    "--cov",
+    "--cov-fail-under",
+    "60"
+]
+python_files = "tests/*/*.py"
+filterwarnings = ["ignore::FutureWarning"]
