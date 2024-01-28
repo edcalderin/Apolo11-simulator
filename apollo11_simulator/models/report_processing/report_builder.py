@@ -6,7 +6,8 @@ from typing import Dict
 import pandas as pd
 from yaml import YAMLError
 
-from apollo11_simulator.common import Utils, Logger
+from apollo11_simulator.common import Logger, Utils
+from apollo11_simulator.exceptions import UnfoundEventsError
 from apollo11_simulator.models.report_processing.task_calculator import TaskCalculator
 
 logger = Logger.get_logger("report_builder")
@@ -17,8 +18,8 @@ class ReportBuilder:
                  origin_path: str,
                  target_path: str) -> None:
         self.__events = events
-        self.__origin_path = origin_path
-        self.__target_path = target_path
+        self.__origin_path = Path(origin_path)
+        self.__target_path = Path(target_path)
 
     @classmethod
     def read_events(cls, origin_path: str, target_path: str) -> None:
@@ -34,10 +35,13 @@ class ReportBuilder:
         --------
         None
         '''
+        try:
+            events_df = cls.events_to_dataframe(cls, Path(origin_path))
 
-        events_df = cls.events_to_dataframe(cls, origin_path)
-
-        return cls(events_df, origin_path, target_path)
+            return cls(events_df, origin_path, target_path)
+        except UnfoundEventsError as unfound_error:
+            logger.error(str(unfound_error))
+            exit(-1)
 
     @staticmethod
     def _read_file_map(file_name) -> Dict:
@@ -52,23 +56,26 @@ class ReportBuilder:
 
         return event
 
-    def events_to_dataframe(self, origin_path: str) -> pd.DataFrame:
+    def events_to_dataframe(self, origin_path: Path) -> pd.DataFrame:
         events = pd.DataFrame.from_records(
             filter(lambda y: y is not None,
-                   map(self._read_file_map,
-                       Path(origin_path).glob('*.log'))))
+                map(self._read_file_map,
+                    origin_path.glob('*.log'))))
+
         if not len(events):
-            print('No events')
-            raise 
+            raise UnfoundEventsError(
+                f'Directory {origin_path.absolute()} either doesn\'t exist or '\
+                'contains invalid event files')
+
         events = pd.concat([events, pd.json_normalize(events["device"])], axis=1)
         events.drop("device", inplace=True, axis=1)
         return events
 
     def __call__(self):
-        logger.info(f'Processing events from {Path(self.__origin_path).absolute()}')
+        logger.info(f'Processing events from {self.__origin_path.absolute()}')
         task_calculator = TaskCalculator(self.__events)
         line_jump = ['\n']*2
-        report_name: str = f"APLSTATS-REPORTE-{Utils.transform_date(datetime.now())}.log" # noqa
+        report_name = Path(f'APLSTATS-REPORTE-{Utils.transform_date(datetime.now())}.log') # noqa
 
         with open(report_name, "w+") as file:
 
@@ -83,5 +90,7 @@ class ReportBuilder:
                     file.write('='*100)
                     file.writelines(line_jump)
 
-        logger.info(f'Moving files to {Path(self.__target_path).absolute()}')
+        logger.info(f'Report generated successfully in {report_name.absolute()}')
+
+        logger.info(f'Moving files to {self.__target_path.absolute()}')
         shutil.move(self.__origin_path, self.__target_path)

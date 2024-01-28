@@ -6,7 +6,7 @@ from typing import Any, Dict, List, Tuple
 
 from pydantic import BaseModel, Field, field_validator
 
-from apollo11_simulator.common import Utils, Logger
+from apollo11_simulator.common import Logger, Utils
 from apollo11_simulator.models.event_processing.device import Device
 from apollo11_simulator.models.event_processing.device_status import DeviceStatus
 from apollo11_simulator.models.event_processing.mission import (
