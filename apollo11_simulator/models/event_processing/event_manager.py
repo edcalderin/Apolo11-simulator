@@ -49,7 +49,7 @@ class EventManager(BaseModel):
     range_of_files: Tuple[int, int]
 
     @field_validator('range_of_files')
-    def validate_range_of_files(cls, values: Tuple[int, int]) -> Tuple[int, int]: # noqa
+    def validate_range_of_files(values: Tuple[int, int]) -> Tuple[int, int]:
         """Validate the range_of_file attribute.
 
         Rules:
@@ -93,11 +93,11 @@ class EventManager(BaseModel):
                 device_description = 'unknown'
             )
         else:
-            random_device: Tuple = random.choice(devices_list) # noqa
+            random_device: Tuple = random.choice(devices_list)
             random_device_type, random_device_description = random_device
 
             return Device(
-                device_status = random.choice([ # noqa
+                device_status = random.choice([
                     DeviceStatus.EXCELLENT,
                     DeviceStatus.FAULTY,
                     DeviceStatus.GOOD,
@@ -125,9 +125,9 @@ class EventManager(BaseModel):
 
         min_files, max_files = self.range_of_files
 
-        number_of_files: int = random.randint(min_files, max_files) # noqa
+        number_of_files: int = random.randint(min_files, max_files)
 
-        mission_classes: List = random.choices( # noqa
+        mission_classes: List = random.choices(
             [ColonyMoon, OrbitOne, GalaxyTwo, VacMars, Unkn], k = number_of_files)
 
         # Transforming dictionary of devices to list of tuples
@@ -135,20 +135,20 @@ class EventManager(BaseModel):
 
         for i, mission_class in enumerate(mission_classes, 1):
 
-            random_budget: int = random.randint(*input_data.get('budget')) # noqa
+            random_budget: int = random.randint(*input_data.get('budget'))
 
             # Params for each mission class whose keys correspond to the class name
             mission_params = {
                 ColonyMoon: {
                     'date': datetime.now(),
                     'budget': random_budget,
-                    'size': random.randint(*input_data.get('size')) # noqa
+                    'size': random.randint(*input_data.get('size'))
                 },
                 OrbitOne: {
                     'date': datetime.now(),
                     'budget': random_budget,
-                    'satellite_name': random.choice(input_data.get('satellite_names')), # noqa
-                    'service_type': random.choice( # noqa
+                    'satellite_name': random.choice(input_data.get('satellite_names')),
+                    'service_type': random.choice(
                         [ServiceType.UPDATE, ServiceType.REPARATION,
                          ServiceType.REPLACEMENT]
                     )
@@ -156,14 +156,14 @@ class EventManager(BaseModel):
                 GalaxyTwo: {
                     'date': datetime.now(),
                     'budget': random_budget,
-                    'galaxy_name': random.choice(input_data.get('galaxy_names')), # noqa
+                    'galaxy_name': random.choice(input_data.get('galaxy_names')),
                 },
                 VacMars: {
                     'date': datetime.now(),
                     'budget': random_budget,
-                    'number_of_passengers': random.randint # noqa
+                    'number_of_passengers': random.randint
                     (*input_data.get('number_of_passengers')),
-                    'ticket_price': random.randint(*input_data.get('ticket_price')) # noqa
+                    'ticket_price': random.randint(*input_data.get('ticket_price'))
                 },
                 Unkn: {
                     'date': datetime.now(),
