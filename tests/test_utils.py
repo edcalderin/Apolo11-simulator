@@ -1,4 +1,4 @@
-from apollo11_simulator.utils import Utils
+from apollo11_simulator.common import Utils
 from pathlib import Path
 from typing import Dict
 import yaml
