@@ -1,3 +1,5 @@
+"""Configuration module to be imported with the package name."""
+
 from pathlib import Path
 from typing import Dict
 

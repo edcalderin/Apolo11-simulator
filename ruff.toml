@@ -24,4 +24,11 @@ select = [
 "S",
 # flake8-simplify
 "SIM",
+# docstrings
+"D"
 ]
+
+[lint.pydocstyle]
+# Use Google-style docstrings.
+convention = "pep257"
+
