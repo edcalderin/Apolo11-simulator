@@ -7,6 +7,14 @@ from apollo11_simulator.models.event_processing.device_status import DeviceType
 class GenerateHashTest(TestCase):
 
     def test_generate_hash_galaxy_two(self):
+        """
+            Tests the generation of hash for a device with specific attributes and a given timestamp and galaxy.
+
+            The expected hash is compared with the obtained hash using the 'get_hash' method.
+
+            Returns:
+                None
+                """
         hash_expected = "45996c6220dce5499a6ceb263e31068757a16d46c0a53f7160c1f2f34bee9a77"
 
         device: Device = Device(
