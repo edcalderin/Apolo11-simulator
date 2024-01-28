@@ -92,10 +92,12 @@ class TaskCalculator:
         mission_by_device_status = self.__events.groupby(
             ['mission', 'device_status'])['device_status'].count().rename('count')
 
-        result = (mission_by_device_status / mission_by_device_status\
+        percentages = (mission_by_device_status / mission_by_device_status\
                   .groupby(level=0).sum()) * 100
+        percentages = percentages.map(lambda x: f'{x:.2f} %')\
+            .rename("percentage").to_frame()
 
-        return "*** PORCENTAJE DE ESTADO DE DISPOSITIVOS POR MISION ***", result
+        return "*** PORCENTAJE DE ESTADO DE DISPOSITIVOS POR MISION ***", percentages
 
     def task_status_by_device_type_by_mission(self) -> Tuple[str, pd.DataFrame]:
         """Analyzes the number of device status by device_type and mission.
@@ -114,8 +116,7 @@ class TaskCalculator:
                        .groupby(level=0).sum()) * 100
 
         percentages = percentages.map(lambda x: f'{x:.2f} %')\
-            .rename("percentage")\
-            .to_frame()
+            .rename("percentage").to_frame()
 
         mission_by_devices_data = mission_by_devices_data.to_frame()
         mission_by_devices_data["percentage"] = percentages["percentage"]
