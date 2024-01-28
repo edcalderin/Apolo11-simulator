@@ -2,6 +2,8 @@ from enum import Enum
 
 
 class DeviceStatus(Enum):
+    """Enumerable with possible status for each device."""
+
     EXCELLENT = 'excellent'
     GOOD = 'good'
     WARNING = 'warning'

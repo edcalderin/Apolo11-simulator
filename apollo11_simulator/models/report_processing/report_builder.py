@@ -14,19 +14,27 @@ from apollo11_simulator.models.report_processing.task_calculator import TaskCalc
 logger = Logger.get_logger("report_builder")
 
 class ReportBuilder:
+    """Class to read events and process files."""
 
     def __init__(self,
                  events: pd.DataFrame,
                  devices_path: str,
                  backup_path: Path) -> None:
+        """Initialize the class object.
+
+        Args:
+            events (pd.DataFrame): Dataframe with events
+            devices_path (str): Path containing directory of devices
+            backup_path (Path): Destination path for processed events
+        """
         self.__events = events
         self.__devices_path = Path(devices_path)
         self.__backup_path = backup_path
 
     @classmethod
     def read_events(cls, devices_path: str, backup_path: str) -> None:
-        '''
-        To read files from path and merge content in str
+        """
+        To read files from path and merge content in str.
 
         Parameters:
         --------
@@ -36,7 +44,7 @@ class ReportBuilder:
         Returns:
         --------
         None
-        '''
+        """
         try:
             events_df = cls._events_to_dataframe(cls, Path(devices_path))
 
@@ -81,6 +89,7 @@ class ReportBuilder:
         return events
 
     def __call__(self):
+        """Process the events and move the processed files to the destination path."""
         logger.info(f'Processing events from {self.__devices_path.absolute()}')
         task_calculator = TaskCalculator(self.__events)
         line_jump = ['\n']*2

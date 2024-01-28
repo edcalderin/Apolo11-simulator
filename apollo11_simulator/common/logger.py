@@ -7,6 +7,7 @@ from apollo11_simulator.config import config
 
 
 class Logger:
+    """Logger class that implement methods to get logger configuration."""
 
     @staticmethod
     def get_logger(
@@ -15,16 +16,14 @@ class Logger:
         log_format: str = config["logging"]["log_format"],
         logger_level: int = config["logging"]["logger_level"],
     ):
-        '''
-        Custom logger to use in the app
+        """Create a custom logger to use in the app.
 
         Parameters:
         ----------
         - module_name: name of the application or floe that is running
         - logger_level: logger level - CRITICAL=50,
         ERROR=40, WARNING=30, INFO=20, DEBUG=10, NOTSET=0
-        '''
-
+        """
         log_path: Path = Path(log_location)
         log_path.mkdir(exist_ok = True)
         log_save = log_path.joinpath(

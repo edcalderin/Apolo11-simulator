@@ -23,12 +23,12 @@ logger = Logger.get_logger("event_manager")
 logger = Logger.get_logger("event_manager")
 
 class EventManager(BaseModel):
-    '''
+    """
     Generate event files in yaml format by calling the instance of the class.
 
     Example:
+    event_manager = EventManager(...)
 
-    event_manager = EventManager(...)\n
     event_manager()
 
     Attributes:
@@ -39,7 +39,7 @@ class EventManager(BaseModel):
     - frequency_seconds: Frequency in seconds at which event files will be generated
     - range_of_files: A tuple with 2 values indicating the minimum and maximun number
     of events to generate in each iteration
-    '''
+    """
 
     input_data_file: str = Field(min_length = 1)
     devices_path: str = Field(min_length = 1)
@@ -47,9 +47,10 @@ class EventManager(BaseModel):
     range_of_files: Tuple[int, int]
 
     @field_validator('range_of_files')
-    def validate_range_of_files(cls, values: Tuple[int, int]) -> Tuple[int, int]: # noqa
-        '''
-        Validate the range_of_file with the following rules:
+    def validate_range_of_files(values: Tuple[int, int]) -> Tuple[int, int]:
+        """Validate the range_of_file attribute.
+
+        Rules:
         - Both Values must be positive.
         - Both values must be different from zero.
         - The second value must be greater than the first one.
@@ -57,8 +58,7 @@ class EventManager(BaseModel):
         Returns:
         --------
         Value of the tuple
-        '''
-
+        """
         v1, v2 = values
 
         if v1 < 1 or v2 < 1:
@@ -72,8 +72,7 @@ class EventManager(BaseModel):
     def __random_device(self,
                         mission_class,
                         devices_list: List[Tuple[str, str]]) -> Device:
-        '''
-        Return a random device of type Device class
+        """Return a random device of type Device class.
 
         Parameters:
         -----------
@@ -84,8 +83,7 @@ class EventManager(BaseModel):
         Returns:
         --------
         Object of Device type
-        '''
-
+        """
         if mission_class is Unkn:
             return Device(
                 device_type = 'unknown',
@@ -93,11 +91,11 @@ class EventManager(BaseModel):
                 device_description = 'unknown'
             )
         else:
-            random_device: Tuple = random.choice(devices_list) # noqa
+            random_device: Tuple = random.choice(devices_list)
             random_device_type, random_device_description = random_device
 
             return Device(
-                device_status = random.choice([ # noqa
+                device_status = random.choice([
                     DeviceStatus.EXCELLENT,
                     DeviceStatus.FAULTY,
                     DeviceStatus.GOOD,
@@ -110,8 +108,7 @@ class EventManager(BaseModel):
             )
 
     def __generate_files(self, full_bulk_events_path: Path, input_data: Dict) -> None:
-        '''
-        Generate events in yaml format
+        """Generate events in yaml format.
 
         Parameters:
         -----------
@@ -121,15 +118,14 @@ class EventManager(BaseModel):
         Returns:
         --------
         None
-        '''
-
+        """
         logger.info('Generating files...')
 
         min_files, max_files = self.range_of_files
 
-        number_of_files: int = random.randint(min_files, max_files) # noqa
+        number_of_files: int = random.randint(min_files, max_files)
 
-        mission_classes: List = random.choices( # noqa
+        mission_classes: List = random.choices(
             [ColonyMoon, OrbitOne, GalaxyTwo, VacMars, Unkn], k = number_of_files)
 
         # Transforming dictionary of devices to list of tuples
@@ -137,20 +133,20 @@ class EventManager(BaseModel):
 
         for i, mission_class in enumerate(mission_classes, 1):
 
-            random_budget: int = random.randint(*input_data.get('budget')) # noqa
+            random_budget: int = random.randint(*input_data.get('budget'))
 
             # Params for each mission class whose keys correspond to the class name
             mission_params = {
                 ColonyMoon: {
                     'date': datetime.now(),
                     'budget': random_budget,
-                    'size': random.randint(*input_data.get('size')) # noqa
+                    'size': random.randint(*input_data.get('size'))
                 },
                 OrbitOne: {
                     'date': datetime.now(),
                     'budget': random_budget,
-                    'satellite_name': random.choice(input_data.get('satellite_names')), # noqa
-                    'service_type': random.choice( # noqa
+                    'satellite_name': random.choice(input_data.get('satellite_names')),
+                    'service_type': random.choice(
                         [ServiceType.UPDATE, ServiceType.REPARATION,
                          ServiceType.REPLACEMENT]
                     )
@@ -158,14 +154,14 @@ class EventManager(BaseModel):
                 GalaxyTwo: {
                     'date': datetime.now(),
                     'budget': random_budget,
-                    'galaxy_name': random.choice(input_data.get('galaxy_names')), # noqa
+                    'galaxy_name': random.choice(input_data.get('galaxy_names')),
                 },
                 VacMars: {
                     'date': datetime.now(),
                     'budget': random_budget,
-                    'number_of_passengers': random.randint # noqa
+                    'number_of_passengers': random.randint
                     (*input_data.get('number_of_passengers')),
-                    'ticket_price': random.randint(*input_data.get('ticket_price')) # noqa
+                    'ticket_price': random.randint(*input_data.get('ticket_price'))
                 },
                 Unkn: {
                     'date': datetime.now(),
@@ -184,6 +180,7 @@ class EventManager(BaseModel):
             mission_instance.generate_event(name)
 
     def __call__(self) -> Any:
+        """Start the mission and device's simulation."""
         try:
             iteration: int = 1
 

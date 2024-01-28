@@ -1,3 +1,5 @@
+"""Entrypoint of the application."""
+
 import argparse
 
 from apollo11_simulator.common import Logger
