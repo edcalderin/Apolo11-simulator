@@ -8,6 +8,7 @@ from yaml import YAMLError
 
 from apollo11_simulator.common import Logger, Utils
 from apollo11_simulator.exceptions import UnfoundEventsError
+from apollo11_simulator.models.report_processing.report_title import REPORT_TITLE
 from apollo11_simulator.models.report_processing.task_calculator import TaskCalculator
 
 logger = Logger.get_logger("report_builder")
@@ -15,30 +16,30 @@ logger = Logger.get_logger("report_builder")
 class ReportBuilder:
 
     def __init__(self, events: pd.DataFrame,
-                 origin_path: str,
-                 target_path: str) -> None:
+                 devices_path: str,
+                 backup_path: str) -> None:
         self.__events = events
-        self.__origin_path = Path(origin_path)
-        self.__target_path = Path(target_path)
+        self.__devices_path = Path(devices_path)
+        self.__backup_path = Path(backup_path)
 
     @classmethod
-    def read_events(cls, origin_path: str, target_path: str) -> None:
+    def read_events(cls, devices_path: str, backup_path: str) -> None:
         '''
         To read files from path and merge content in str
 
         Parameters:
         --------
-        - origin_path: Path containing the event files
-        - target_path: Path to save the report
+        - devices_path: Path containing the event files
+        - backup_path: Path to save the report
 
         Returns:
         --------
         None
         '''
         try:
-            events_df = cls.events_to_dataframe(cls, Path(origin_path))
+            events_df = cls.events_to_dataframe(cls, Path(devices_path))
 
-            return cls(events_df, origin_path, target_path)
+            return cls(events_df, devices_path, backup_path)
         except UnfoundEventsError as unfound_error:
             logger.error(str(unfound_error))
             exit(-1)
@@ -56,15 +57,15 @@ class ReportBuilder:
 
         return event
 
-    def events_to_dataframe(self, origin_path: Path) -> pd.DataFrame:
+    def events_to_dataframe(self, devices_path: Path) -> pd.DataFrame:
         events = pd.DataFrame.from_records(
             filter(lambda y: y is not None,
                 map(self._read_file_map,
-                    origin_path.glob('*.log'))))
+                    devices_path.glob('*.log'))))
 
         if not len(events):
             raise UnfoundEventsError(
-                f'Directory {origin_path.absolute()} either doesn\'t exist or '\
+                f'Directory {devices_path.absolute()} either doesn\'t exist or '\
                 'contains invalid event files')
 
         events = pd.concat([events, pd.json_normalize(events["device"])], axis=1)
@@ -72,12 +73,13 @@ class ReportBuilder:
         return events
 
     def __call__(self):
-        logger.info(f'Processing events from {self.__origin_path.absolute()}')
+        logger.info(f'Processing events from {self.__devices_path.absolute()}')
         task_calculator = TaskCalculator(self.__events)
         line_jump = ['\n']*2
         report_name = Path(f'APLSTATS-REPORTE-{Utils.transform_date(datetime.now())}.log') # noqa
 
         with open(report_name, "w+") as file:
+            file.write(REPORT_TITLE)
 
             for attr in dir(task_calculator):
                 # Filtering the task_calculator attributes by "task_" pattern.
@@ -85,12 +87,12 @@ class ReportBuilder:
                 if attr.startswith('task_'):
                     report_title, report_df = getattr(task_calculator, attr)()
                     file.write(f'{report_title}\n')
-                    file.write(f'{report_df.to_string()}\n')
+                    file.write(report_df.to_string())
                     file.writelines(line_jump)
-                    file.write('='*100)
+                    file.write('='*85)
                     file.writelines(line_jump)
 
         logger.info(f'Report generated successfully in {report_name.absolute()}')
 
-        logger.info(f'Moving files to {self.__target_path.absolute()}')
-        shutil.move(self.__origin_path, self.__target_path)
+        logger.info(f'Moving files to {self.__backup_path.absolute()}')
+        shutil.move(self.__devices_path, self.__backup_path)

@@ -26,7 +26,7 @@ if __name__ == '__main__':
 
             event_manager = EventManager(
                 input_data_file = event_params["input_data_file"],
-                target_path = event_params["devices_path"],
+                devices_path = event_params["devices_path"],
                 frequency_seconds = event_params["frequency_seconds"],
                 range_of_files = (event_params["range_of_files"]["min"],
                                   event_params["range_of_files"]["max"])
@@ -37,8 +37,8 @@ if __name__ == '__main__':
         case 'generate-report':
             logger.info('Running in "generate report" mode')
             reporter = ReportBuilder.read_events(
-                origin_path=event_params["devices_path"],
-                target_path=event_params["backup_path"]
+                devices_path=event_params["devices_path"],
+                backup_path=event_params["backup_path"]
             )
 
             reporter()

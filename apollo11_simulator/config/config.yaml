@@ -14,4 +14,4 @@ logging:
   message_format: '%(asctime)s - [%(levelname)s] - [%(name)s]: %(message)s'
 
 utils:
-  custom_format: "%d%m%y%H%M%S"
+  custom_format: '%d%m%y%H%M%S'

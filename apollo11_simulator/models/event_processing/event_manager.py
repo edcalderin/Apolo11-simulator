@@ -34,7 +34,7 @@ class EventManager(BaseModel):
     Attributes:
     ----------
     - input_data_file: Path to directory with test data
-    - target_path: Path to directory that will contain event files.
+    - devices_path: Path to directory that will contain event files.
       It will be created if it does not exist
     - frequency_seconds: Frequency in seconds at which event files will be generated
     - range_of_files: A tuple with 2 values indicating the minimum and maximun number
@@ -42,7 +42,7 @@ class EventManager(BaseModel):
     '''
 
     input_data_file: str = Field(min_length = 1)
-    target_path: str = Field(min_length = 1)
+    devices_path: str = Field(min_length = 1)
     frequency_seconds: int = Field(gt = 0)
     range_of_files: Tuple[int, int]
 
@@ -61,11 +61,8 @@ class EventManager(BaseModel):
 
         v1, v2 = values
 
-        if v1 < 0 or v2 < 0:
-            raise ValueError('All the values must be positive')
-
-        if v1 == v2 == 0:
-            raise ValueError('Both values must be different from zero')
+        if v1 < 1 or v2 < 1:
+            raise ValueError('All the values must be greater than 1')
 
         if v1 > v2:
             raise ValueError('The second value must be greater than the first one')
@@ -112,7 +109,7 @@ class EventManager(BaseModel):
                 device_description = random_device_description
             )
 
-    def __generate_files(self, epoch: int, input_data: Dict) -> None:
+    def __generate_files(self, full_bulk_events_path: Path, input_data: Dict) -> None:
         '''
         Generate events in yaml format
 
@@ -137,10 +134,6 @@ class EventManager(BaseModel):
 
         # Transforming dictionary of devices to list of tuples
         devices_list: List[Tuple[str, str]] = list(input_data.get('devices').items())
-
-        # Create "devices" directory if it does not exist
-        device_path = Path(self.target_path)
-        device_path.mkdir(exist_ok = True)
 
         for i, mission_class in enumerate(mission_classes, 1):
 
@@ -181,23 +174,38 @@ class EventManager(BaseModel):
             }
 
             # Create an instance based on one of the dictionary keys
-            mission_instance = mission_class(**mission_params[mission_class],
-                                             device = self.__random_device(
-                                                 mission_class,
-                                                                           devices_list))
+            mission_instance = mission_class(
+                **mission_params[mission_class],
+                device = self.__random_device(mission_class, devices_list))
 
-            name: Path = device_path.joinpath(f'{str(mission_instance)}-{epoch}{i}.log')
+            name: Path = full_bulk_events_path.joinpath(
+                f'{str(mission_instance)}-{i}.log')
 
             mission_instance.generate_event(name)
 
     def __call__(self) -> Any:
         try:
-            epoch: int = 0
+            iteration: int = 1
+
             input_data: Dict = Utils.read_json(Path(self.input_data_file))
             while True:
-                self.__generate_files(epoch, input_data)
+                timestamp: str = Utils.transform_date(datetime.now())
+
+                bulk_event_dir: str = f'iter_{iteration}__events_{timestamp}'
+
+                # It will create a directory with the following path:
+                # <devices_path>/iter_<iteration>_events_<dates>/
+                bulk_events_path: Path = Path(self.devices_path)\
+                    .joinpath(bulk_event_dir)
+
+                # Create the directory if it does not exist
+                bulk_events_path.mkdir(exist_ok = True, parents = True)
+
+                self.__generate_files(bulk_events_path, input_data)
+
                 sleep(self.frequency_seconds)
-                epoch += 1
+
+                iteration += 1
 
         except KeyboardInterrupt:
             logger.exception('The process was interrupted!')
