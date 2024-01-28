@@ -3,7 +3,7 @@ from typing import Any, Callable
 
 from yaml import YAMLError
 
-from apollo11_simulator.logger import Logger
+from apollo11_simulator.common import Logger
 
 logger = Logger.get_logger("decorators")
 

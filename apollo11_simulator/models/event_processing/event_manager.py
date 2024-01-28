@@ -6,7 +6,7 @@ from typing import Any, Dict, List, Tuple
 
 from pydantic import BaseModel, Field, field_validator
 
-from apollo11_simulator.logger import Logger
+from apollo11_simulator.common import Utils, Logger
 from apollo11_simulator.models.event_processing.device import Device
 from apollo11_simulator.models.event_processing.device_status import DeviceStatus
 from apollo11_simulator.models.event_processing.mission import (
@@ -17,7 +17,6 @@ from apollo11_simulator.models.event_processing.mission import (
     VacMars,
 )
 from apollo11_simulator.models.event_processing.service_type import ServiceType
-from apollo11_simulator.utils import Utils
 
 logger = Logger.get_logger("event_manager")
 
@@ -73,8 +72,9 @@ class EventManager(BaseModel):
 
         return values
 
-    def __random_device(self, mission_class, devices_list:
-                        List[Tuple[str, str]]) -> Device:
+    def __random_device(self,
+                        mission_class,
+                        devices_list: List[Tuple[str, str]]) -> Device:
         '''
         Return a random device of type Device class
 

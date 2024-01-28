@@ -36,16 +36,15 @@ class Logger:
             logger = logging.getLogger(module_name)
             logger.setLevel(logger_level)
 
-            format = logging.Formatter(
-                '%(asctime)s - [%(levelname)s] - [%(name)s]: %(message)s')
+            format = logging.Formatter(config["logging"]["message_format"])
             login_stream_handler = logging.StreamHandler()
             login_stream_handler.setFormatter(format)
             logger.addHandler(login_stream_handler)
 
             file_handler = handlers.RotatingFileHandler(log_save,
-                                                       maxBytes = (1048576 * 5),
-                                                       backupCount = 7
-                                                       )
+                                                        maxBytes = (1048576 * 5),
+                                                        backupCount = 7
+            )
             file_handler.setFormatter(format)
             logger.addHandler(file_handler)
 

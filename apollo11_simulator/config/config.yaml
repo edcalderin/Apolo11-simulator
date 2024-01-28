@@ -11,6 +11,7 @@ logging:
   log_location: logs
   log_format: "%Y%m%d%H%M%S"
   logger_level: 20
+  message_format: '%(asctime)s - [%(levelname)s] - [%(name)s]: %(message)s'
 
 utils:
   custom_format: "%d%m%y%H%M%S"

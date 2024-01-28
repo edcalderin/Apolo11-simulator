@@ -74,3 +74,4 @@ class Utils:
         '''
         with open(path) as file:
             return json.load(file)
+
