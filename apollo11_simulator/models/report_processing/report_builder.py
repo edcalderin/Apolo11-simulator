@@ -15,12 +15,13 @@ logger = Logger.get_logger("report_builder")
 
 class ReportBuilder:
 
-    def __init__(self, events: pd.DataFrame,
+    def __init__(self,
+                 events: pd.DataFrame,
                  devices_path: str,
-                 backup_path: str) -> None:
+                 backup_path: Path) -> None:
         self.__events = events
         self.__devices_path = Path(devices_path)
-        self.__backup_path = Path(backup_path)
+        self.__backup_path = backup_path
 
     @classmethod
     def read_events(cls, devices_path: str, backup_path: str) -> None:
@@ -39,7 +40,14 @@ class ReportBuilder:
         try:
             events_df = cls._events_to_dataframe(cls, Path(devices_path))
 
-            return cls(events_df, devices_path, backup_path)
+            # Create backup directoy if it does not exist
+            backup_path_ = Path(backup_path)
+            backup_path_.mkdir(exist_ok = True)
+            print(backup_path_)
+            return cls(events = events_df,
+                       devices_path = devices_path,
+                       backup_path = backup_path_)
+
         except UnfoundEventsError as unfound_error:
             logger.error(str(unfound_error))
             exit(-1)
@@ -76,7 +84,8 @@ class ReportBuilder:
         logger.info(f'Processing events from {self.__devices_path.absolute()}')
         task_calculator = TaskCalculator(self.__events)
         line_jump = ['\n']*2
-        report_name = Path(f'APLSTATS-REPORTE-{Utils.transform_date(datetime.now())}.log') # noqa
+        report_name = Path(
+            f'APLSTATS-REPORTE-{Utils.transform_date(datetime.now())}.log')
 
         with open(report_name, "w+") as file:
             file.write(REPORT_TITLE)
@@ -94,5 +103,12 @@ class ReportBuilder:
 
         logger.info(f'Report generated successfully in {report_name.absolute()}')
 
-        logger.info(f'Moving files to {self.__backup_path.absolute()}')
-        shutil.move(self.__devices_path, self.__backup_path, copy_function=shutil.copytree)
+        logger.info(f'Moving subdirectories to {self.__backup_path.absolute()}')
+
+        iter_count: int = 1
+
+        for path in self.__devices_path.iterdir():
+            shutil.move(path, self.__backup_path)
+            iter_count += 1
+        else:
+            logger.info(f'{iter_count} events subdiretories were found and moved!')
