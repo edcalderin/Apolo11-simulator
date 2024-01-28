@@ -37,7 +37,7 @@ class ReportBuilder:
         None
         '''
         try:
-            events_df = cls.events_to_dataframe(cls, Path(devices_path))
+            events_df = cls._events_to_dataframe(cls, Path(devices_path))
 
             return cls(events_df, devices_path, backup_path)
         except UnfoundEventsError as unfound_error:
@@ -57,11 +57,11 @@ class ReportBuilder:
 
         return event
 
-    def events_to_dataframe(self, devices_path: Path) -> pd.DataFrame:
+    def _events_to_dataframe(self, devices_path: Path) -> pd.DataFrame:
         events = pd.DataFrame.from_records(
             filter(lambda y: y is not None,
                 map(self._read_file_map,
-                    devices_path.glob('*.log'))))
+                    devices_path.glob('**/*.log'))))
 
         if not len(events):
             raise UnfoundEventsError(
@@ -95,4 +95,4 @@ class ReportBuilder:
         logger.info(f'Report generated successfully in {report_name.absolute()}')
 
         logger.info(f'Moving files to {self.__backup_path.absolute()}')
-        shutil.move(self.__devices_path, self.__backup_path)
+        shutil.move(self.__devices_path, self.__backup_path, copy_function=shutil.copytree)
