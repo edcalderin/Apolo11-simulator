@@ -3,16 +3,16 @@
 ## Table of contents
 <!--ts-->
 
-* [Problem statement](#problem-statement)
-* [Directory layout](#directory-layout)
-* [Architecture](#architecture)
-* [Setup](#setup)
-* [Running the app](#running-the-app)
-    * [Generator](#generator)
-    * [Reporter](#reporter)
-* [Checkpoints](#checkpoints)
-* [About the authors](#about-the-authors)
-* [References](#references)
+- [Apollo 11 Simulator](#apollo-11-simulator)
+  - [Table of contents](#table-of-contents)
+  - [Problem statement](#problem-statement)
+  - [Directory layout](#directory-layout)
+  - [Test](#test)
+  - [About the authors](#about-the-authors)
+    - [Erick](#erick)
+    - [Ana](#ana)
+    - [Pablo](#pablo)
+  - [References](#references)
 <!--te-->
 
 ## Problem statement
@@ -25,16 +25,18 @@ Hemos sido convocados como ingenieros en jefe, y se nos ha asignado la tarea de 
 ## Directory layout
 ```
 .
-├── images              # Assets
-├── apollo11_simulator  # Code
-│   ├── config          # Configuration files
-│   └── models          # Classes
-│       ├── generator   # Generator classes
-│       └── reporter    # Reporter classes
-└── tests               # Tests
+├── apollo11_simulator          #Code
+│   ├── config                  # Configuration files
+│   └── models                  # Classes
+│       ├── event_processing    # Generator classes
+│       └── report_processing   # Reporter classes
+├── images                      # Assets
+├── input_data
+└── tests                       # Tests
+    └── test_data
 
-7 directories
-```
+9 directories
+
 
 ## Architecture
 
@@ -49,38 +51,45 @@ El programa "APOLLO11-SIMULATOR" consta de dos componentes principales:
 
 ### Reporter:
 * Encargado de la generación de reportes y manejo de archivos.
-* Analiza eventos, gestiona desconexiones, consolida misiones, calcula porcentajes y genera informes.
+* Analiza eventos, gestiona desconexiones, consolida misiones, calcula porcentajes y genera informes en un archivo plano.
 * Proporciona informes estadísticos para la toma de decisiones.
 
 ## Setup
-Steps to reproduce this project
-
-1. Step 1
-2. Step 2
-3. Step 3
+1. Instalar y configurar poetry de acuerdo a tu Sistema Operativo: https://python-poetry.org/docs/
+2. Correr poetry shell para activar el ambiente
+3. Correr poetry install para instalar dependencias
 
 ## Running the app
-El programa "APOLLO11-SIMULATOR" consta de dos partes principales que se ejecutan de manera independiente.
+Se pueden ejecutar ambas partes, de manera independiente, de la siguiente forma:
 
 ### Generator
 Ejecute el siguiente comando para iniciar la simulación de datos:
 
-python -m apollo11_simulator generate-events
+`python -m apollo11_simulator generate-events`
 
 ### Reporter
-Ejecute el siguiente comando para generar reportes y realizar el manejo de archivos:
+Ejecute el siguiente comando para generar reportes y realizar el manejo de eventos:
 
-python -m apollo11_simulator generate-report
+`python -m apollo11_simulator generate-report`
 
-## Checkpoints
-- [x] Problem description
-- [x] Inheritance
-- [x] Class methods
-- [x] File managements
-- [x] Logging
-- [x] Other
-- [ ] Tests
-- [ ] Other
+## Configuration
+
+``` 
+event_params:
+  frequency_seconds: 2
+  input_data_file: input_data/simulation.json
+  devices_path: devices
+  backup_path: backup
+  range_of_files:
+    min: 2
+    max: 5
+``` 
+
+## Test
+Para ejecutar los tests de la aplicación se debe ejecutar:
+
+`pytest tests/`
+
 
 ## About the authors
 
