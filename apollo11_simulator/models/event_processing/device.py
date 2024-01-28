@@ -1,5 +1,3 @@
-"""Devices module."""
-
 from pydantic import BaseModel, ConfigDict
 
 from apollo11_simulator.models.event_processing.device_status import DeviceStatus

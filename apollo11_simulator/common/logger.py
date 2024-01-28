@@ -1,4 +1,3 @@
-"""Logger module."""
 import logging
 from datetime import datetime
 from logging import handlers

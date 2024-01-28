@@ -1,5 +1,3 @@
-"""TaskCalculator module."""
-
 from typing import Tuple
 
 import pandas as pd

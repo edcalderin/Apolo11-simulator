@@ -1,5 +1,3 @@
-"""Decorators module."""
-
 from json import JSONDecodeError
 from typing import Any, Callable
 

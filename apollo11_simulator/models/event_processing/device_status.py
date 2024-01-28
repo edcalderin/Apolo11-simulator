@@ -1,4 +1,3 @@
-"""DeviceStatus module."""
 from enum import Enum
 
 

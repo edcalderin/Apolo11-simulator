@@ -1,5 +1,3 @@
-"""UnfoundEventsError exception module."""
-
 class UnfoundEventsError(Exception):
     """Custom exception.
 

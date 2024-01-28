@@ -1,5 +1,3 @@
-"""ServiceType module."""
-
 from enum import Enum
 
 

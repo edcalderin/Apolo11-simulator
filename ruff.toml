@@ -33,6 +33,7 @@ select = [
 convention = "pep257"
 
 [lint.per-file-ignores]
+"*" = ["D100"]
 "__init__.py" = ["D104"]
 "event_manager.py" = [
     #ignore pseudo-random lint errors
