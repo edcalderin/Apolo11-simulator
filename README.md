@@ -101,7 +101,7 @@ Luego de ejectuar el comando verás una salida en consola confirmando que se pro
 
 Esta es la previsualización del reporte generado en texto plano, contiene los siguientes informes estadísticos:
 * Cantidad de dispositivos por misión
-* Contidad de dispositivos desconectados por misión
+* Cantidad de dispositivos desconectados por misión
 * Cantidad de estados por misión
 * Porcentaje de estado de dispositivos por misión
 * Cantidad de dispositivos inoperables
@@ -117,22 +117,22 @@ Configura los parámetros de la aplicación en el [archivo de configuración](./
 Se muestra acontinuación su estructura:
 
 ``` 
-  frequency_seconds: 2    <---- Frecuencia en la que se generarán eventos
-  input_data_file: input_data/simulation.json    <---- Archivo que contiene datos de simulación
-  devices_path: devices    <---- Directorio que almacenará los archivos
-  backup_path: backup    <---- Directorio que contendrá los archivos luego de ser procesados
+  frequency_seconds: 2                            <---- Frecuencia en la que se generarán eventos
+  input_data_file: input_data/simulation.json     <---- Archivo que contiene datos de simulación
+  devices_path: devices                           <---- Directorio que almacenará los archivos
+  backup_path: backup                             <---- Directorio que contendrá los archivos luego de ser procesados
   range_of_files:
-    min: 2    <---- Cantidad mínima de archivos a generar
-    max: 5    <---- Cantidad máxima de archivos a generar
+    min: 2                                        <---- Cantidad mínima de archivos a generar
+    max: 5                                        <---- Cantidad máxima de archivos a generar
 
   logging:
-  log_location: logs            <---- Directorio donde persisten los archivos generados por el logger
-  log_format: "%Y%m%d%H%M%S"    <---- Formato de fecha para el nombre de los archivos
-  logger_level: 20              <---- logger.INFO como nivel mínimo
+  log_location: logs                              <---- Directorio donde persisten los archivos generados por el logger
+  log_format: "%Y%m%d%H%M%S"                      <---- Formato de fecha para el nombre de los archivos
+  logger_level: 20                                <---- logger.INFO como nivel mínimo
   message_format: '%(asctime)s - [%(levelname)s] - [%(name)s]: %(message)s'   <---- Formato de mensaje
 
 utils:
-  custom_format: '%d%m%y%H%M%S'  
+  custom_format: '%d%m%y%H%M%S'                   <---- Formato de fecha para nombres de archivos de eventos
 
 ``` 
 
@@ -173,8 +173,7 @@ https://www.linkedin.com/in/pablo-alarcon-dev
 
 ## References
 
-Ruta N
-https://www.rutanmedellin.org/
+* Ruta N (https://www.rutanmedellin.org/)
 
 
 
