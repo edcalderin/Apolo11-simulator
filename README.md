@@ -22,6 +22,7 @@
     - [Erick Calderin:](#erick-calderin)
     - [Ana Arteaga Jimenez](#ana-arteaga-jimenez)
     - [Pablo Alarcón](#pablo-alarcón)
+  - [References](#references)
 <!--te-->
 
 ## Problem statement
@@ -90,11 +91,12 @@ Ejecute el siguiente comando para generar reportes y realizar el manejo de event
 
 `python -m apollo11_simulator generate-report`  
 
-![Alt text](./images/above_report.jpeg)<p align="center">
 
 Luego de ejectuar el comando verás una salida en consola confirmando que se procesaron los eventos, generó el reporte (accediendo al mismo al hacer Ctrl + click sobre la ruta en pantalla), y se movieron los archivos al directorio destino:  
 
-![Alt text](./images/IMG-20240128-WA0011.jpeg)<p align="center">  
+![Alt text](./images/above_report.jpeg)<p align="center">
+
+ 
 
 Esta es la previsualización del reporte generado en texto plano, contiene los siguientes informes estadísticos:
 * Cantidad de dispositivos por misión
@@ -105,12 +107,12 @@ Esta es la previsualización del reporte generado en texto plano, contiene los s
 * Cantidad de estados por dispositivo por misión  
 
 
-
+![Alt text](./images/IMG-20240128-WA0011.jpeg)<p align="center"> 
 
 
 
 ## Configuration
-Configura los parámetros de la aplicación en el ![archivo de configuración](./apollo11_simulator/config/config.yaml) provisto dentro del proyecto.  
+Configura los parámetros de la aplicación en el [archivo de configuración](./apollo11_simulator/config/config.yaml) provisto dentro del proyecto.  
 Se muestra acontinuación su estructura:
 
 ``` 
@@ -151,5 +153,10 @@ Publicista, Emprendedor y estudiante de Certified Tech Developer, con determinac
 LinkedIn: 
 https://www.linkedin.com/in/pablo-alarcon-dev
 
+## References
+
+Ruta N
+
+SoftServe
 
 
