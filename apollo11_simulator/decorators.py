@@ -1,9 +1,10 @@
-from json import JSONDecodeError
-import time
-from typing import Any, Callable, Dict
-import psutil
 import os
+from json import JSONDecodeError
+from typing import Any, Callable, Dict
+
+import psutil
 from yaml import YAMLError
+
 from apollo11_simulator.common import Logger
 
 current_pid = os.getpid()
@@ -50,6 +51,14 @@ class ExistingProcessError:
     - psutil.AccessDenied: Process already exists
     """
 
+    def __init__(self, function: Callable) -> None:
+        """Initialize the class object.
+
+        Args:
+            function (Callable): Function to decorate
+        """
+        self._function = function
+
     def __call__(self, *args: Any, **kwds: Any) -> Any:
         """Contains the logic used for the decorator."""
         try:
@@ -61,9 +70,9 @@ class ExistingProcessError:
                 pid = process_dict.get('pid')
                 cmdline = process_dict.get('cmdline')
 
-                if 'python -m apollo11_simulator generate-events' == ' '.join(cmdline):
+                if ' '.join(cmdline) == 'python -m apollo11_simulator generate-events':
                     raise psutil.AccessDenied(
-                            msg=f'The event generator is already running with PID: {pid}')
+                        msg=f'The event generator is already running with PID: {pid}')
             else:
                 self._function(*args, **kwds)
 
