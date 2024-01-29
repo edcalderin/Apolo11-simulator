@@ -17,6 +17,7 @@
     - [Reporter](#reporter-1)
   - [Configuration](#configuration)
   - [Test](#test)
+  - [Third-party modules](#Third-party-modules)
   - [Acknowledgments](#acknowledgments)
   - [About the authors](#about-the-authors)
     - [Erick Calderin:](#erick-calderin)
@@ -92,7 +93,7 @@ Ejecute el siguiente comando para generar reportes y realizar el manejo de event
 `python -m apollo11_simulator generate-report`  
 
 
-Luego de ejectuar el comando verás una salida en consola confirmando que se procesaron los eventos, generó el reporte (accediendo al mismo al hacer Ctrl + click sobre la ruta en pantalla), y se movieron los archivos al directorio destino:  
+Luego de ejectuar el comando verás una salida en consola confirmando que se procesaron los eventos, generó el reporte (accediendo al mismo al hacer `Ctrl + click` sobre la ruta en pantalla), y se movieron los archivos al directorio destino:  
 
 ![Alt text](./images/above_report.jpeg)<p align="center">
 
@@ -127,7 +128,7 @@ Se muestra acontinuación su estructura:
   logging:
   log_location: logs            <---- Directorio donde persisten los archivos generados por el logger
   log_format: "%Y%m%d%H%M%S"    <---- Formato de fecha para el nombre de los archivos
-  logger_level: 20              <---- logger.info como nivel mínimo
+  logger_level: 20              <---- logger.INFO como nivel mínimo
   message_format: '%(asctime)s - [%(levelname)s] - [%(name)s]: %(message)s'   <---- Formato de mensaje
 
 utils:
@@ -141,19 +142,17 @@ Podrás ejecutar los tests de la aplicación mediante:
 `pytest tests/`
 
 
+## Third-party modules
+Se instalaron los siguientes módulos de terceros para el funcionamiento y configuración del proyecto:
+* **pydantic**: Utilizado para serializar modelos directamente a formato Json y validación de atributos.
+* **pyyaml**: Creación y lectura de archivos Yaml.
+* **pandas**: Creación de reportes en formato DataFrame.
+* **ruff**: Linter de la aplicación.
+* **pytest**: Ejecución de tests unitarios
+
 
 ## Acknowledgments
 Agradecimientos a todas aquellas personas que hicieron posible este espacio de aprendizaje, especialmente al equipo de Ruta N; a nuestro tutor Luis Vásquez y nuestro mentor Daniel Restrepo, quienes con paciencia y siempre dispuestos nos acompañaron y brindaron las bases para desarrollar el conocimiento y materializarlo en este proyecto que presentamos.
-
-
-## Third-party modules
-Se instalaron los siguientes módulos de terceros para el funcionamiento y configuración del proyecto:
-* pydantic: Utilizado para serializar modelos directamente a formato Json y validación de atributos.
-* pyyaml: Creación y lectura de archivos Yaml.
-* pandas: Creación de reportes en formato DataFrame.
-* ruff: Linter de la aplicación.
-* pytest: Ejecución de tests unitarios
-
 
 
 ## About the authors
