@@ -7,12 +7,19 @@
   - [Table of contents](#table-of-contents)
   - [Problem statement](#problem-statement)
   - [Directory layout](#directory-layout)
+  - [Architecture](#architecture)
+    - [Generator:](#generator)
+    - [Reporter:](#reporter)
+  - [Setup](#setup)
+  - [Running the app](#running-the-app)
+    - [Generator](#generator-1)
+    - [Reporter](#reporter-1)
+  - [Configuration](#configuration)
   - [Test](#test)
   - [About the authors](#about-the-authors)
-    - [Erick](#erick)
-    - [Ana](#ana)
-    - [Pablo](#pablo)
-  - [References](#references)
+    - [Erick Calderin:](#erick-calderin)
+    - [Ana Arteaga Jimenez](#ana-arteaga-jimenez)
+    - [Pablo Alarcón](#pablo-alarcón)
 <!--te-->
 
 ## Problem statement
@@ -37,7 +44,8 @@ Hemos sido convocados como ingenieros en jefe, y se nos ha asignado la tarea de 
 
 9 directories
 
-Push test
+```
+
 
 ## Architecture
 
@@ -94,20 +102,18 @@ Para ejecutar los tests de la aplicación se debe ejecutar:
 
 ## About the authors
 
-### Erick
-Text here
+### Erick Calderin:
+Ingeniero de Sistemas, estudiante de maestría, con experiencia en desarrollo, apasionado a Python e Inteligencia Artificial.
+LinkedIn:
+https://www.linkedin.com/in/erick-calderin-5bb6963b/ 
 
-### Ana
-Text here
+### Ana Arteaga Jimenez
+Administradora financiera, estudiante de inglés, experiencia en diferentes áreas administrativas, y coordinación de operaciones. Explorando el mundo de la programación.
 
-### Pablo
-Text here
+### Pablo Alarcón
+Publicista, Emprendedor y estudiante de Certified Tech Developer, con determinación para ser parte de la industria tecnologica como desarrollador BackEnd.
+LinkedIn:
+https://www.linkedin.com/in/pablo-alarcon-dev
 
-
-
-## References
-* Reference 1
-* Reference 2
-* Reference n
 
 
