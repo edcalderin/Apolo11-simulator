@@ -81,6 +81,8 @@ Ejecute el siguiente comando para iniciar la simulación de datos:
 
 `python -m apollo11_simulator generate-events`
 
+Salida en consola:
+
 ![Alt text](./images/after_generator.jpeg)<p align="center">
 
 ### Reporter
@@ -90,11 +92,22 @@ Ejecute el siguiente comando para generar reportes y realizar el manejo de event
 
 ![Alt text](./images/above_report.jpeg)<p align="center">
 
+Luego de ejectuar el comando verás una salida en consola confirmando que se procesaron los eventos, generó el reporte (accediendo al mismo al hacer Ctrl + click sobre la ruta en pantalla), y se movieron los archivos al directorio destino:
+imagen de la salida del comando del reporter aqui
+Esta es la previsualización del reporte generado en texto plano, contiene los siguientes informes estadísticos:
+* Colocar aqui lo que devuelve cada tabla.
+* tabla 2
+* tabla 3
+* etc.
+
+
 ![Alt text](./images/IMG-20240128-WA0011.jpeg)<p align="center">
 
 
 
 ## Configuration
+Configura los parámetros de la aplicación en el ![archivo de configuración](./apollo11_simulator/config/config.yaml) provisto dentro del proyecto.  
+Se muestra acontinuación su estructura:
 
 ``` 
   frequency_seconds: 2    <---- Frecuencia en la que se generarán eventos
