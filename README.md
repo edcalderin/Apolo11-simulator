@@ -84,7 +84,11 @@ Ejecute el siguiente comando para iniciar la simulación de datos:
 ### Reporter
 Ejecute el siguiente comando para generar reportes y realizar el manejo de eventos:
 
-`python -m apollo11_simulator generate-report`
+`python -m apollo11_simulator generate-report`  
+
+![Alt text](./images/IMG-20240128-WA0011.jpeg)<p align="center">
+
+
 
 ## Configuration
 
@@ -104,7 +108,7 @@ Podrás ejecutar los tests de la aplicación mediante:
 
 `pytest tests/`
 
-![Alt text](./images/IMG-20240128-WA0011.jpeg)<p align="center">
+
 
 ## Acknowledgments
 Agradecimientos a todas aquellas personas que hicieron posible este espacio de aprendizaje, especialmente al equipo de Ruta N; a nuestro tutor Luis Vásquez y nuestro mentor Daniel Restrepo, quienes con paciencia y siempre dispuestos nos acompañaron y brindaron las bases para desarrollar el conocimiento y materializarlo en este proyecto que presentamos.
