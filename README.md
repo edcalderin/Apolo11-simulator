@@ -34,21 +34,24 @@ Hemos sido convocados como ingenieros en jefe, y se nos ha asignado la tarea de 
 ```
 .
 ├── apollo11_simulator          #Code
+│   ├── common
 │   ├── config                  # Configuration files
+│   ├── exceptions              # Exceptions
 │   └── models                  # Classes
 │       ├── event_processing    # Generator classes
 │       └── report_processing   # Reporter classes
 ├── images                      # Assets
-├── input_data
+├── input_data                  # Simulation data
 └── tests                       # Tests
     └── test_data
 
-9 directories
+11 directories
 
 ```
 
 
 ## Architecture
+Hemos creado un diagrama de clases que sirve como esqueleto para nuestro proyecto, debajo se muestra la version final del mismo puesto que estuvo en constante evolución desde las primeras etapas de análisis y desarrollo. Se puede distinguir a simpla vista que nuestro enfoque estuvo basado en los pilares de la  POO (Programación Orientada a Objetos):
 
 ![Alt text](./images/classes_diagram.png)
 
@@ -66,8 +69,8 @@ El programa "APOLLO11-SIMULATOR" consta de dos componentes principales:
 
 ## Setup
 1. Instalar y configurar poetry de acuerdo a tu Sistema Operativo: https://python-poetry.org/docs/
-2. Correr poetry shell para activar el ambiente
-3. Correr poetry install para instalar dependencias
+2. Ejecutar `poetry shell` para activar el ambiente.
+3. Correr `poetry install` para instalar dependencias
 
 ## Running the app
 Se pueden ejecutar ambas partes, de manera independiente, de la siguiente forma:
@@ -85,18 +88,18 @@ Ejecute el siguiente comando para generar reportes y realizar el manejo de event
 ## Configuration
 
 ``` 
-event_params:
-  frequency_seconds: 2
-  input_data_file: input_data/simulation.json
-  devices_path: devices
-  backup_path: backup
+  frequency_seconds: 2    <---- Frecuencia en la que se generarán eventos
+  input_data_file: input_data/simulation.json    <---- Archivo que contiene datos de simulación
+  devices_path: devices    <---- Directorio que almacenará los archivos
+  backup_path: backup    <---- Directorio que contendrá los archivos luego de ser procesados
   range_of_files:
-    min: 2
-    max: 5
+    min: 2    <---- Cantidad mínima de archivos a generar
+    max: 5    <---- Cantidad máxima de archivos a generar
+
 ``` 
 
 ## Test
-Para ejecutar los tests de la aplicación se debe ejecutar:
+Podrás ejecutar los tests de la aplicación mediante:
 
 `pytest tests/`
 
@@ -104,16 +107,16 @@ Para ejecutar los tests de la aplicación se debe ejecutar:
 ## About the authors
 
 ### Erick Calderin:
-Ingeniero de Sistemas, estudiante de maestría, con experiencia en desarrollo, apasionado a Python e Inteligencia Artificial.
-LinkedIn:
+Ingeniero de Sistemas, estudiante de maestría, con experiencia en desarrollo, apasionado a Python e Inteligencia Artificial.  
+LinkedIn:  
 https://www.linkedin.com/in/erick-calderin-5bb6963b/ 
 
 ### Ana Arteaga Jimenez
 Administradora financiera, estudiante de inglés, experiencia en diferentes áreas administrativas, y coordinación de operaciones. Explorando el mundo de la programación.
 
 ### Pablo Alarcón
-Publicista, Emprendedor y estudiante de Certified Tech Developer, con determinación para ser parte de la industria tecnologica como desarrollador BackEnd.
-LinkedIn:
+Publicista, Emprendedor y estudiante de Certified Tech Developer, con determinación para ser parte de la industria tecnologica como desarrollador BackEnd.  
+LinkedIn: 
 https://www.linkedin.com/in/pablo-alarcon-dev
 
 
