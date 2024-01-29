@@ -1,4 +1,5 @@
 # Apollo 11 Simulator
+![Alt text](./images/luna-mision-nasa.webp)<p align="center"><i>Image credits: <a href="https://www.freepik.es/foto-gratis/diseno-collage-viajes-espaciales_94964717.htm#page=2&query=misiones%20espaciales&position=6&from_view=search&track=ais&uuid=b9537576-012c-4a51-9b65-cd29d7156015">Freepik</a></i></p>
 
 ## Table of contents
 <!--ts-->
