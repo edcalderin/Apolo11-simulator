@@ -17,6 +17,7 @@
     - [Reporter](#reporter-1)
   - [Configuration](#configuration)
   - [Test](#test)
+  - [Acknowledgments](#acknowledgments)
   - [About the authors](#about-the-authors)
     - [Erick Calderin:](#erick-calderin)
     - [Ana Arteaga Jimenez](#ana-arteaga-jimenez)
@@ -102,6 +103,12 @@ Ejecute el siguiente comando para generar reportes y realizar el manejo de event
 Podrás ejecutar los tests de la aplicación mediante:
 
 `pytest tests/`
+
+![Alt text](./images/IMG-20240128-WA0011.jpeg)<p align="center">
+
+## Acknowledgments
+Agradecimientos a todas aquellas personas que hicieron posible este espacio de aprendizaje, especialmente al equipo de Ruta N; a nuestro tutor Luis Vásquez y nuestro mentor Daniel Restrepo, quienes con paciencia y siempre dispuestos nos acompañaron y brindaron las bases para desarrollar el conocimiento y materializarlo en este proyecto que presentamos.
+
 
 
 ## About the authors
