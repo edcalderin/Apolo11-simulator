@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 [tool.poetry]
 name = "apollo11-simulator"
 version = "1.0.0"
@@ -35,3 +36,26 @@ addopts = [
 ]
 python_files = "tests/*/*.py"
 filterwarnings = ["ignore::FutureWarning"]
+=======
+[tool.poetry]
+name = "apollo11-simulator"
+version = "1.0.0"
+description = ""
+authors = ["Erick Calderin", "Anabel Arteaga", "Pablo Alarcon"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+pydantic = "^2.5.2"
+pyyaml = "^6.0.1"
+pandas = "^2.2.0"
+ruff = "^0.1.14"
+
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.4.4"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+>>>>>>> 99e01a2b39d909b0c8d2da9e65c2f4dabee2b001

@@ -1,0 +1,44 @@
+[lint]
+select = [
+
+# Pyflakes
+"F",
+# pycodestyle
+"E",
+"W",
+# isort
+"I",
+# pep8-naming
+"N",
+# pyupgrade
+"UP",
+# flake8-todos
+"TD",
+# flake8-tidy-imports
+"TID",
+# flake8-import-conventions
+"ICN",
+# flake8-bugbear
+"B",
+# flake8-bandit
+"S",
+# flake8-simplify
+"SIM",
+# docstrings
+"D"
+]
+
+[lint.pydocstyle]
+# Use Google-style docstrings.
+convention = "pep257"
+
+[lint.per-file-ignores]
+"*" = ["D100"]
+"__init__.py" = ["D104"]
+"event_manager.py" = [
+    #ignore pseudo-random lint errors
+    "S311",
+
+    #ignore first argument of a method should be named self in validate_range_of_files() method
+    "N805" ]
+

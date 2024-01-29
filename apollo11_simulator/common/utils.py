@@ -1,20 +1,23 @@
+import json
 from datetime import datetime
 from pathlib import Path
-import yaml
 from typing import Dict
-import json
+
+import yaml
+
+from apollo11_simulator.config import config
 from apollo11_simulator.decorators import CatchFileExceptions
 
+
 class Utils:
-    '''
-    Class with important utilities ready to be re-used,
-    these are static methods that can be invoked without instantiating the class.
-    '''
+    """Class with utility methods.
+
+    These are static methods that can be invoked without instantiating the class.
+    """
 
     @staticmethod
     def transform_date(date: datetime) -> str:
-        '''
-        To transform date in format ddmmyyHHMMSS
+        """To transform date in format ddmmyyHHMMSS.
 
         Parameters:
         -----------
@@ -23,15 +26,14 @@ class Utils:
         Returns:
         --------
             str
-        '''
-        custom_format = '%d%m%y%H%M%S'
+        """
+        custom_format = config["utils"]["custom_format"]
         return date.strftime(custom_format)
 
     @staticmethod
     @CatchFileExceptions
     def read_yaml(path: Path) -> Dict:
-        '''
-        Read a yaml file given a path
+        """Read a yaml file given a path.
 
         Parameters:
         -----------
@@ -45,15 +47,14 @@ class Utils:
         -----------
         - YAMLError: Invalid yaml file
         - Exception: Error by reading file
-        '''
+        """
         with open(path) as file:
             return yaml.safe_load(file)
 
     @staticmethod
     @CatchFileExceptions
     def read_json(path: Path) -> Dict:
-        '''
-        Read a json file given a path
+        """Read a json file given a path.
 
         Parameters:
         -----------
@@ -67,6 +68,7 @@ class Utils:
         -----------
         - JSONDecodeError: Invalid json file
         - Exception: Error by reading file
-        '''
+        """
         with open(path) as file:
             return json.load(file)
+
