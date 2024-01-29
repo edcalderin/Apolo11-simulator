@@ -81,10 +81,14 @@ Ejecute el siguiente comando para iniciar la simulación de datos:
 
 `python -m apollo11_simulator generate-events`
 
+![Alt text](./images/after_generator.jpeg)<p align="center">
+
 ### Reporter
 Ejecute el siguiente comando para generar reportes y realizar el manejo de eventos:
 
 `python -m apollo11_simulator generate-report`  
+
+![Alt text](./images/above_report.jpeg)<p align="center">
 
 ![Alt text](./images/IMG-20240128-WA0011.jpeg)<p align="center">
 
