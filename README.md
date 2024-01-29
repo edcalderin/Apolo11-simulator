@@ -92,16 +92,20 @@ Ejecute el siguiente comando para generar reportes y realizar el manejo de event
 
 ![Alt text](./images/above_report.jpeg)<p align="center">
 
-Luego de ejectuar el comando verás una salida en consola confirmando que se procesaron los eventos, generó el reporte (accediendo al mismo al hacer Ctrl + click sobre la ruta en pantalla), y se movieron los archivos al directorio destino:
-imagen de la salida del comando del reporter aqui
+Luego de ejectuar el comando verás una salida en consola confirmando que se procesaron los eventos, generó el reporte (accediendo al mismo al hacer Ctrl + click sobre la ruta en pantalla), y se movieron los archivos al directorio destino:  
+
+![Alt text](./images/IMG-20240128-WA0011.jpeg)<p align="center">  
+
 Esta es la previsualización del reporte generado en texto plano, contiene los siguientes informes estadísticos:
-* Colocar aqui lo que devuelve cada tabla.
-* tabla 2
-* tabla 3
-* etc.
+* Cantidad de dispositivos por misión
+* Contidad de dispositivos desconectados por misión
+* Cantidad de estados por misión
+* Porcentaje de estado de dispositivos por misión
+* Cantidad de dispositivos inoperables
+* Cantidad de estados por dispositivo por misión  
 
 
-![Alt text](./images/IMG-20240128-WA0011.jpeg)<p align="center">
+
 
 
 
