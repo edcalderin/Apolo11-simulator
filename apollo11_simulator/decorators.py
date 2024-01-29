@@ -1,10 +1,12 @@
 from json import JSONDecodeError
-from typing import Any, Callable
-
+import time
+from typing import Any, Callable, Dict
+import psutil
+import os
 from yaml import YAMLError
-
 from apollo11_simulator.common import Logger
 
+current_pid = os.getpid()
 logger = Logger.get_logger("decorators")
 
 class CatchFileExceptions:
@@ -38,3 +40,33 @@ class CatchFileExceptions:
         except Exception as e:
             logger.error(f'Error by reading file: {str(e)}')
             raise e
+
+class ExistingProcessError:
+    """
+    Decorator used to disable events generation if another is still running.
+
+    Exceptions:
+    -----------
+    - psutil.AccessDenied: Process already exists
+    """
+
+    def __call__(self, *args: Any, **kwds: Any) -> Any:
+        """Contains the logic used for the decorator."""
+        try:
+            for p in psutil.process_iter():
+                if p.pid == current_pid:
+                    continue
+
+                process_dict: Dict = p.as_dict(attrs=['pid', 'cmdline'])
+                pid = process_dict.get('pid')
+                cmdline = process_dict.get('cmdline')
+
+                if 'python -m apollo11_simulator generate-events' == ' '.join(cmdline):
+                    raise psutil.AccessDenied(
+                            msg=f'The event generator is already running with PID: {pid}')
+            else:
+                self._function(*args, **kwds)
+
+        except psutil.AccessDenied as access_error:
+            logger.error(str(access_error))
+            exit(-1)

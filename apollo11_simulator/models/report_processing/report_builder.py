@@ -18,7 +18,7 @@ class ReportBuilder:
 
     def __init__(self,
                  events: pd.DataFrame,
-                 devices_path: str,
+                 devices_path: Path,
                  backup_path: Path) -> None:
         """Initialize the class object.
 
@@ -28,7 +28,7 @@ class ReportBuilder:
             backup_path (Path): Destination path for processed events
         """
         self.__events = events
-        self.__devices_path = Path(devices_path)
+        self.__devices_path = devices_path
         self.__backup_path = backup_path
 
     @classmethod
@@ -46,15 +46,19 @@ class ReportBuilder:
         None
         """
         try:
-            events_df = cls._events_to_dataframe(cls, Path(devices_path))
+            devices_path = Path(devices_path)
+
+            logger.info(f'Processing events from {devices_path.absolute()}')
+
+            events_df = cls._events_to_dataframe(cls, devices_path)
 
             # Create backup directoy if it does not exist
-            backup_path_ = Path(backup_path)
-            backup_path_.mkdir(exist_ok = True)
-            print(backup_path_)
+            backup_path = Path(backup_path)
+            backup_path.mkdir(exist_ok = True)
+
             return cls(events = events_df,
                        devices_path = devices_path,
-                       backup_path = backup_path_)
+                       backup_path = backup_path)
 
         except UnfoundEventsError as unfound_error:
             logger.error(str(unfound_error))
@@ -90,7 +94,6 @@ class ReportBuilder:
 
     def __call__(self):
         """Process the events and move the processed files to the destination path."""
-        logger.info(f'Processing events from {self.__devices_path.absolute()}')
         task_calculator = TaskCalculator(self.__events)
         line_jump = ['\n']*2
         report_name = Path(
