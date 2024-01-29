@@ -124,6 +124,15 @@ Se muestra acontinuación su estructura:
     min: 2    <---- Cantidad mínima de archivos a generar
     max: 5    <---- Cantidad máxima de archivos a generar
 
+  logging:
+  log_location: logs            <---- Directorio donde persisten los archivos generados por el logger
+  log_format: "%Y%m%d%H%M%S"    <---- Formato de fecha para el nombre de los archivos
+  logger_level: 20              <---- logger.info como nivel mínimo
+  message_format: '%(asctime)s - [%(levelname)s] - [%(name)s]: %(message)s'   <---- Formato de mensaje
+
+utils:
+  custom_format: '%d%m%y%H%M%S'  
+
 ``` 
 
 ## Test
@@ -137,6 +146,15 @@ Podrás ejecutar los tests de la aplicación mediante:
 Agradecimientos a todas aquellas personas que hicieron posible este espacio de aprendizaje, especialmente al equipo de Ruta N; a nuestro tutor Luis Vásquez y nuestro mentor Daniel Restrepo, quienes con paciencia y siempre dispuestos nos acompañaron y brindaron las bases para desarrollar el conocimiento y materializarlo en este proyecto que presentamos.
 
 
+## Third-party modules
+Se instalaron los siguientes módulos de terceros para el funcionamiento y configuración del proyecto:
+* pydantic: Utilizado para serializar modelos directamente a formato Json y validación de atributos.
+* pyyaml: Creación y lectura de archivos Yaml.
+* pandas: Creación de reportes en formato DataFrame.
+* ruff: Linter de la aplicación.
+* pytest: Ejecución de tests unitarios
+
+
 
 ## About the authors
 
@@ -147,6 +165,7 @@ https://www.linkedin.com/in/erick-calderin-5bb6963b/
 
 ### Ana Arteaga Jimenez
 Administradora financiera, estudiante de inglés, experiencia en diferentes áreas administrativas, y coordinación de operaciones. Explorando el mundo de la programación.
+https://www.linkedin.com/in/anabelarteaga/
 
 ### Pablo Alarcón
 Publicista, Emprendedor y estudiante de Certified Tech Developer, con determinación para ser parte de la industria tecnologica como desarrollador BackEnd.  
@@ -156,7 +175,8 @@ https://www.linkedin.com/in/pablo-alarcon-dev
 ## References
 
 Ruta N
+https://www.rutanmedellin.org/
 
-SoftServe
+
 
 
