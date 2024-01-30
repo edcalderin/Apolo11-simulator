@@ -1,7 +1,6 @@
 from typing import Dict
 
 from apollo11_simulator.common import Logger
-from apollo11_simulator.decorators import ExistingProcessError
 from apollo11_simulator.models.event_processing.event_manager import EventManager
 from apollo11_simulator.models.report_processing.report_builder import ReportBuilder
 
@@ -18,7 +17,6 @@ class ArgParseOperations:
         """
         self._event_params = event_params
 
-    @ExistingProcessError
     def generate_events(self):
         """Generate events operation."""
         logger.info('Running in "generate events" mode')
