@@ -22,9 +22,11 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
 
+    argparse_operations = ArgParseOperations(event_params)
+
     match args.operation:
         case 'generate-events':
-            ArgParseOperations.generate_events(event_params)
+            argparse_operations.generate_events()
 
         case 'generate-report':
-            ArgParseOperations.generate_report(event_params)
+            argparse_operations.generate_report()

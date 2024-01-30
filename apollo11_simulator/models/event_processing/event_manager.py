@@ -20,8 +20,6 @@ from apollo11_simulator.models.event_processing.service_type import ServiceType
 
 logger = Logger.get_logger("event_manager")
 
-logger = Logger.get_logger("event_manager")
-
 class EventManager(BaseModel):
     """
     Generate event files in yaml format by calling the instance of the class.
