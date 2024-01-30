@@ -1,6 +1,6 @@
 import os
 from json import JSONDecodeError
-from typing import Any, Callable, Dict
+from typing import Any, Callable
 
 import psutil
 from yaml import YAMLError
@@ -59,18 +59,21 @@ class ExistingProcessError:
         """
         self._function = function
 
+    def __get__(self, obj, _):
+        """Support instance methods."""
+        import functools
+        return functools.partial(self.__call__, obj)
+
     def __call__(self, *args: Any, **kwds: Any) -> Any:
         """Contains the logic used for the decorator."""
         try:
-            for p in psutil.process_iter():
-                if p.pid == current_pid:
+            for process in psutil.process_iter(attrs=['pid', 'cmdline']):
+                if process.pid == current_pid:
                     continue
+                cmdline: str = 'python -m apollo11_simulator generate-events'
+                pid: int = process.pid
 
-                process_dict: Dict = p.as_dict(attrs=['pid', 'cmdline'])
-                pid = process_dict.get('pid')
-                cmdline = process_dict.get('cmdline')
-
-                if ' '.join(cmdline) == 'python -m apollo11_simulator generate-events':
+                if ' '.join(process.cmdline()) == cmdline:
                     raise psutil.AccessDenied(
                         msg=f'The event generator is already running with PID: {pid}')
             else:
